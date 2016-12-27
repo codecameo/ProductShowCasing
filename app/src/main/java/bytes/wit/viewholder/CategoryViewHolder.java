@@ -2,10 +2,12 @@ package bytes.wit.viewholder;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 
 import bytes.wit.adapters.HorizontalProductListAdapter;
 import bytes.wit.showcasing.R;
+import bytes.wit.snap.GravitySnapHelper;
 
 /**
  * Created by Md. Sifat-Ul Haque on 12/27/2016.
@@ -27,6 +29,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
     private void setupProductList() {
         mProductList.setAdapter(mProductListAdapter);
         mProductList.setLayoutManager(new LinearLayoutManager(mProductList.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        new GravitySnapHelper(Gravity.START).attachToRecyclerView(mProductList);
     }
 
     private void initVariables() {
