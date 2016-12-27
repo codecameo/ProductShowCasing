@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="bytes.wit.showcasing.HomeActivity">
+
+    <FrameLayout
+        android:id="@+id/slider_panel"
+        android:layout_width="match_parent"
+        android:layout_height="196dp"
+        android:background="@color/colorAccent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/slider_panel"
+        android:id="@+id/rv_home_product_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

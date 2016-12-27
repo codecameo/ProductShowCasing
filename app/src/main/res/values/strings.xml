@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Show Casing</string>
+    <string name="category_name">Category Name</string>
+    <string name="text_more">More</string>
+    <string name="text_view_all">View All</string>
+    <string name="text_default_product_name">Product Name</string>
+</resources>
