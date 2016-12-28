@@ -4,4 +4,7 @@
     <string name="text_more">More</string>
     <string name="text_view_all">View All</string>
     <string name="text_default_product_name">Product Name</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_brand_new">Brand New</string>
+    <string name="tab_popular">Popular</string>
 </resources>

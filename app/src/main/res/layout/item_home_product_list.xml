@@ -6,7 +6,7 @@
     android:layout_marginRight="@dimen/activity_vertical_margin"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
     app:cardCornerRadius="8dp"
-    app:cardElevation="8dp"
+    app:cardElevation="6dp"
     android:clipToPadding="false">
 
     <LinearLayout
