@@ -1,0 +1,24 @@
+package bytes.wit.application;
+
+import android.app.Application;
+
+import com.squareup.leakcanary.LeakCanary;
+
+/**
+ * Created by Md. Sifat-Ul Haque on 12/28/2016.
+ */
+
+public class ShowCasingApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+        // Normal app init code...
+    }
+}
