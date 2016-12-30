@@ -31,6 +31,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
     private void setupProductList() {
         mProductList.setAdapter(mProductListAdapter);
+        //mProductList.addItemDecoration(new DividerItemDecoration());
         mProductList.setLayoutManager(new LinearLayoutManager(mProductList.getContext(), LinearLayoutManager.HORIZONTAL, false));
         new GravitySnapHelper(Gravity.START).attachToRecyclerView(mProductList);
     }
