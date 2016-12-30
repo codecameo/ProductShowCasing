@@ -2,18 +2,25 @@ package bytes.wit.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import bytes.wit.models.CategoryModel;
 import bytes.wit.showcasing.R;
 import bytes.wit.viewholder.CategoryViewHolder;
-import bytes.wit.viewholder.SliderViewHolder;
 
 /**
  * Created by Md. Sifat-Ul Haque on 12/27/2016.
  */
 
-public class HomeCategorizedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeCategorizedListAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
+
+    private ArrayList<CategoryModel> mCategoryModels;
+
+    public HomeCategorizedListAdapter() {
+        mCategoryModels = new ArrayList<>();
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -24,7 +31,7 @@ public class HomeCategorizedListAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         //if (viewType == R.layout.item_home_list)
             return new CategoryViewHolder(LayoutInflater.from(parent.getContext()).inflate(viewType,parent,false));
@@ -33,14 +40,24 @@ public class HomeCategorizedListAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(CategoryViewHolder holder, int position) {
+        holder.bindTo(mCategoryModels.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return mCategoryModels.size();
     }
+
+
+    public void updateData(ArrayList<CategoryModel> categoryModels) {
+        mCategoryModels.clear();
+        mCategoryModels.addAll(categoryModels);
+        notifyDataSetChanged();
+    }
+
+
+
 
     /*@Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {

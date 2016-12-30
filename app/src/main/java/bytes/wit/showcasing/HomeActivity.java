@@ -77,4 +77,11 @@ public class HomeActivity extends BaseActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        /*startActivity(new Intent(HomeActivity.this,DemoActivity.class));
+        finish();*/
+        super.onBackPressed();
+    }
 }

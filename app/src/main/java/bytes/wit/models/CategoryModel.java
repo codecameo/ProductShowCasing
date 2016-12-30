@@ -1,12 +1,13 @@
 package bytes.wit.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Md. Sifat-Ul Haque on 12/26/2016.
  */
 
-public class CategoryModel {
+public class CategoryModel implements Serializable {
 
     private String category_id, category_name, description, status;
     private ArrayList<ProductModel> products;

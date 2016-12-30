@@ -4,8 +4,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 
 import bytes.wit.adapters.HorizontalProductListAdapter;
+import bytes.wit.models.CategoryModel;
 import bytes.wit.showcasing.R;
 import bytes.wit.snap.GravitySnapHelper;
 
@@ -17,6 +19,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
     private RecyclerView mProductList;
     private HorizontalProductListAdapter mProductListAdapter;
+    private TextView mTvCategoryTitle;
 
     public CategoryViewHolder(View itemView) {
         super(itemView);
@@ -37,6 +40,11 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void initViews(View view) {
+        mTvCategoryTitle = (TextView) view.findViewById(R.id.tv_category_name);
         mProductList = (RecyclerView) view.findViewById(R.id.rv_product_list);
+    }
+
+    public void bindTo(CategoryModel categoryModel) {
+        mTvCategoryTitle.setText(categoryModel.getCategory_name());
     }
 }
