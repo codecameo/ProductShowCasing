@@ -1,9 +1,11 @@
 package bytes.wit.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Md. Sifat-Ul Haque on 12/26/2016.
  */
-public class ContentModel {
+public class ContentModel implements Serializable {
 
     private String content_id, content_url, extension, type, thumb_url, thumb_width, thumb_height;
 
