@@ -1,5 +1,6 @@
 package bytes.wit.showcasing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -81,6 +82,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             // Handle the camera action
         } else if (id == R.id.nav_language) {
 
+        } else if (id == R.id.nav_store_locator) {
+            startActivity(new Intent(HomeActivity.this, StoreLocatorActivity.class));
         }
 
         mDrawer.closeDrawer(GravityCompat.START);

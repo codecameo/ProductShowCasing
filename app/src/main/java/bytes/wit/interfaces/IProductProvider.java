@@ -5,6 +5,7 @@ package bytes.wit.interfaces;
  */
 
 public interface IProductProvider {
+
     void getProductList();
 
     void getProductList(String categoryID);
