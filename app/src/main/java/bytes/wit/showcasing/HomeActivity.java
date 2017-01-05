@@ -83,7 +83,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_language) {
 
         } else if (id == R.id.nav_store_locator) {
-            startActivity(new Intent(HomeActivity.this, StoreLocatorActivity.class));
+            startActivity(new Intent(HomeActivity.this, StoreLocatorListActivity.class));
         }
 
         mDrawer.closeDrawer(GravityCompat.START);

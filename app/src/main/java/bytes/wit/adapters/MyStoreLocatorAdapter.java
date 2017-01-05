@@ -6,25 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import bytes.wit.interfaces.OnListItemClickListener;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.showcasing.R;
-import bytes.wit.showcasing.fragment.StoreLocatorFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link StoreLocatorModel} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link OnListItemClickListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyStoreLocatorAdapter extends RecyclerView.Adapter<MyStoreLocatorAdapter.ViewHolder> {
 
     private final List<StoreLocatorModel> mStoreLocatorModels;
-    private final OnListFragmentInteractionListener mListener;
+    private final OnListItemClickListener mOnListItemClickListener;
 
-    public MyStoreLocatorAdapter(List<StoreLocatorModel> items, OnListFragmentInteractionListener listener) {
+    public MyStoreLocatorAdapter(List<StoreLocatorModel> items, OnListItemClickListener onListItemClickListener) {
         mStoreLocatorModels = items;
-        mListener = listener;
+        mOnListItemClickListener = onListItemClickListener;
     }
 
     @Override
@@ -57,10 +57,10 @@ public class MyStoreLocatorAdapter extends RecyclerView.Adapter<MyStoreLocatorAd
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (null != mListener) {
+                    if (null != mOnListItemClickListener) {
                         // Notify the active callbacks interface (the activity, if the
                         // fragment is attached to one) that an item has been selected.
-                        mListener.onListFragmentInteraction(mStoreLocatorModels.get(getAdapterPosition()));
+                        mOnListItemClickListener.OnItemClicked(getAdapterPosition());
                     }
                 }
             });
