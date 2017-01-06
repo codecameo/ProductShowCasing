@@ -8,4 +8,5 @@ public class Constant {
 
     public static final int API_RESPONSE_SUCCESSFUL = 200;
     public static final int API_RESPONSE_ERROR = 404;
+    public static final String ACTION = "action";
 }

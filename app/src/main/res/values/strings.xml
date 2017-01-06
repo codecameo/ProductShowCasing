@@ -19,5 +19,6 @@
     <string name="nav_announcement">Announcement</string>
     <string name="nav_offers">Offers</string>
     <string name="nav_purchases">Purchases</string>
+    <string name="text_store_location">Store Location</string>
 
 </resources>

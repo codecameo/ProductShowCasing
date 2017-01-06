@@ -6,23 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
+import bytes.wit.fragments.FragmentStoreList.OnListFragmentInteractionListener;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.showcasing.R;
-import bytes.wit.showcasing.fragment.StoreLocatorFragment.OnListFragmentInteractionListener;
-
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link StoreLocatorModel} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyStoreLocatorAdapter extends RecyclerView.Adapter<MyStoreLocatorAdapter.ViewHolder> {
+public class StoreLocatorAdapter extends RecyclerView.Adapter<StoreLocatorAdapter.ViewHolder> {
 
     private final List<StoreLocatorModel> mStoreLocatorModels;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyStoreLocatorAdapter(List<StoreLocatorModel> items, OnListFragmentInteractionListener listener) {
+    public StoreLocatorAdapter(List<StoreLocatorModel> items, OnListFragmentInteractionListener listener) {
         mStoreLocatorModels = items;
         mListener = listener;
     }
@@ -44,7 +44,7 @@ public class MyStoreLocatorAdapter extends RecyclerView.Adapter<MyStoreLocatorAd
         return mStoreLocatorModels.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final TextView mIdView;
         public final TextView mContentView;
@@ -54,16 +54,8 @@ public class MyStoreLocatorAdapter extends RecyclerView.Adapter<MyStoreLocatorAd
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (null != mListener) {
-                        // Notify the active callbacks interface (the activity, if the
-                        // fragment is attached to one) that an item has been selected.
-                        mListener.onListFragmentInteraction(mStoreLocatorModels.get(getAdapterPosition()));
-                    }
-                }
-            });
+            itemView.setOnClickListener(this);
+
         }
 
         @Override
@@ -74,6 +66,13 @@ public class MyStoreLocatorAdapter extends RecyclerView.Adapter<MyStoreLocatorAd
         public void bindTo(StoreLocatorModel storeLocatorModel) {
             mIdView.setText(storeLocatorModel.getMobile_number());
             mContentView.setText(storeLocatorModel.getDistrict());
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mListener != null) {
+                mListener.onListFragmentInteraction(mStoreLocatorModels.get(getAdapterPosition()));
+            }
         }
     }
 }

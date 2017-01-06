@@ -28,7 +28,8 @@
         <activity android:name=".DemoActivity" />
         <activity
             android:name=".StoreLocatorActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/text_store_location" />
 
         <service android:name="bytes.wit.services.ProductProviderService" />
 

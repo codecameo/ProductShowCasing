@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.squareup.leakcanary.LeakCanary;
 
+
 /**
  * Created by Md. Sifat-Ul Haque on 12/28/2016.
  */

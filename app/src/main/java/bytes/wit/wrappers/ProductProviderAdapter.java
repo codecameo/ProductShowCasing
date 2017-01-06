@@ -9,6 +9,8 @@ import java.lang.ref.WeakReference;
 import bytes.wit.interfaces.IProductProvider;
 import bytes.wit.services.ProductProviderService;
 
+import static bytes.wit.utils.Constant.ACTION;
+
 /**
  * Created by Md. Sifat-Ul Haque on 12/30/2016.
  */
@@ -16,7 +18,6 @@ import bytes.wit.services.ProductProviderService;
 public class ProductProviderAdapter implements IProductProvider {
 
     public static final String PRODUCT_RESULT_RECEIVER = "product_result_receiver";
-    public static final String ACTION = "action";
     public static final int CATEGORIZED_PRODUCT_ACTION = 1001;
     public static final String KEY_CATEGORIZED_PRODUCT = "categorized_product";
 

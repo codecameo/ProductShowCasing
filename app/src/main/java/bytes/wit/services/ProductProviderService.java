@@ -18,6 +18,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static bytes.wit.utils.Constant.ACTION;
+
 /**
  * Created by Md. Sifat-Ul Haque on 12/30/2016.
  */
@@ -36,7 +38,7 @@ public class ProductProviderService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("Service", "Fetching data");
         resultReceiver = intent.getParcelableExtra(ProductProviderAdapter.PRODUCT_RESULT_RECEIVER);
-        action = intent.getIntExtra(ProductProviderAdapter.ACTION, 0);
+        action = intent.getIntExtra(ACTION, 0);
 
         fetchCategorizedProductList();
     }
@@ -101,7 +103,7 @@ public class ProductProviderService extends IntentService {
     private void sendProductData() {
         if (resultReceiver != null) {
             Bundle bundle = new Bundle();
-            bundle.putInt(ProductProviderAdapter.ACTION, action);
+            bundle.putInt(ACTION, action);
             bundle.putSerializable(ProductProviderAdapter.KEY_CATEGORIZED_PRODUCT, mCategoryModels);
             resultReceiver.send(Constant.API_RESPONSE_SUCCESSFUL, bundle);
         }

@@ -5,14 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
+import bytes.wit.fragments.FragmentStoreList;
 import bytes.wit.models.StoreLocatorModel;
-import bytes.wit.showcasing.fragment.StoreLocatorFragment;
 
 /**
  * Created by Md. Sifat-Ul Haque on 1/4/2017.
  */
 
-public class StoreLocatorActivity extends BaseActivity implements StoreLocatorFragment.OnListFragmentInteractionListener{
+public class StoreLocatorActivity extends BaseActivity implements FragmentStoreList.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class StoreLocatorActivity extends BaseActivity implements StoreLocatorFr
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Replace the contents of the container with the new fragment
-        ft.replace(R.id.store_locator_content, StoreLocatorFragment.newInstance(2));
+        ft.replace(R.id.store_locator_content, new FragmentStoreList());
         // Complete the changes added above
         ft.commit();
     }
