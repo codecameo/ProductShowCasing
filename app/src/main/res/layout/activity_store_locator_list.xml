@@ -14,8 +14,9 @@
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <FrameLayout
-        android:id="@+id/store_locator_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+        <include layout="@layout/store_locator_content"/>
+    </FrameLayout>
 
 </LinearLayout>
