@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "http://api.openweathermap.org/";
+    public static final String BASE_URL = "http://407992f2.ngrok.io/witbytes/public/api/v1/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
@@ -21,5 +21,4 @@ public class ApiClient {
         }
         return retrofit;
     }
-
 }

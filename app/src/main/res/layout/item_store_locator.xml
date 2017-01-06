@@ -2,19 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_margin="@dimen/text_margin"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/id"
+        android:padding="@dimen/location_item_padding"
+        android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:text="Address"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
-        android:id="@+id/content"
+        android:padding="@dimen/location_item_padding"
+        android:id="@+id/tv_district"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:text="mobile"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+        android:padding="@dimen/location_item_padding"
+        android:id="@+id/tv_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="mobile"
         android:textAppearance="?attr/textAppearanceListItem" />
 </LinearLayout>

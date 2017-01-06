@@ -1,12 +1,18 @@
 package bytes.wit.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Md. Sifat-Ul Haque on 1/4/2017.
  */
 
 public class StoreLocatorModel {
 
-    private String store_address, mobile_number, district;
+    @SerializedName("address")
+    private String store_address;
+    @SerializedName("mobile")
+    private String mobile_number;
+    private String district;
     private double latitude, longitude;
 
     public String getStore_address() {

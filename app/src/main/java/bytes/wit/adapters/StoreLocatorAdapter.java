@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bytes.wit.fragments.FragmentStoreList.OnListFragmentInteractionListener;
@@ -19,7 +20,7 @@ import bytes.wit.showcasing.R;
  */
 public class StoreLocatorAdapter extends RecyclerView.Adapter<StoreLocatorAdapter.ViewHolder> {
 
-    private final List<StoreLocatorModel> mStoreLocatorModels;
+    private List<StoreLocatorModel> mStoreLocatorModels;
     private final OnListFragmentInteractionListener mListener;
 
     public StoreLocatorAdapter(List<StoreLocatorModel> items, OnListFragmentInteractionListener listener) {
@@ -44,28 +45,34 @@ public class StoreLocatorAdapter extends RecyclerView.Adapter<StoreLocatorAdapte
         return mStoreLocatorModels.size();
     }
 
+    public void update(ArrayList<StoreLocatorModel> storeLocatorModels) {
+        mStoreLocatorModels = storeLocatorModels;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mTvAddress;
+        public final TextView mTvMobile;
+        public final TextView mTvDistrict;
 
         public ViewHolder(View view) {
             super(view);
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
-
+            mTvAddress = (TextView) view.findViewById(R.id.tv_address);
+            mTvMobile = (TextView) view.findViewById(R.id.tv_mobile);
+            mTvDistrict = (TextView) view.findViewById(R.id.tv_district);
             itemView.setOnClickListener(this);
-
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mTvMobile.getText() + "'";
         }
 
         public void bindTo(StoreLocatorModel storeLocatorModel) {
-            mIdView.setText(storeLocatorModel.getMobile_number());
-            mContentView.setText(storeLocatorModel.getDistrict());
+            mTvAddress.setText(storeLocatorModel.getStore_address());
+            mTvDistrict.setText(storeLocatorModel.getDistrict());
+            mTvMobile.setText(storeLocatorModel.getMobile_number());
         }
 
         @Override

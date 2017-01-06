@@ -31,6 +31,7 @@
             android:label="@string/text_store_location" />
 
         <service android:name="bytes.wit.services.ProductProviderService" />
+        <service android:name="bytes.wit.services.StoreLocationProviderService" />
 
     </application>
 

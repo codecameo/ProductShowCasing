@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import bytes.wit.apiconfig.ApiClient;
 import bytes.wit.apiconfig.IApiConfigStoreLocationProvider;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.utils.Constant;
-import bytes.wit.wrappers.ProductProviderAdapter;
 import bytes.wit.wrappers.StoreLocationProviderAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,14 +36,12 @@ public class StoreLocationProviderService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-
-        resultReceiver = intent.getParcelableExtra(ProductProviderAdapter.PRODUCT_RESULT_RECEIVER);
+        resultReceiver = intent.getParcelableExtra(StoreLocationProviderAdapter.SHOWROOM_RESULT_RECEIVER);
         action = intent.getIntExtra(ACTION, 0);
 
         if (action == StoreLocationProviderAdapter.ALL_SHOWROOM_ACTION) {
             fetchAllShowroomLocation();
         }
-
     }
 
     private void fetchAllShowroomLocation() {
@@ -54,13 +53,15 @@ public class StoreLocationProviderService extends IntentService {
         call.enqueue(new Callback<ArrayList<StoreLocatorModel>>() {
             @Override
             public void onResponse(Call<ArrayList<StoreLocatorModel>> call, Response<ArrayList<StoreLocatorModel>> response) {
-                //List<ProductModel> movies = response.body().getProducts();
+
+                List<StoreLocatorModel> stores = response.body();
+                sendAllStoreData((ArrayList<StoreLocatorModel>) stores);
+
             }
 
             @Override
             public void onFailure(Call<ArrayList<StoreLocatorModel>> call, Throwable t) {
-                //Log error here since request failed
-                //Log.e(TAG, t.toString());
+                sendAllStoreData((ArrayList<StoreLocatorModel>) Collections.EMPTY_LIST);
             }
         });
     }
@@ -72,6 +73,7 @@ public class StoreLocationProviderService extends IntentService {
             bundle.putSerializable(StoreLocationProviderAdapter.KEY_SHOWROOM_INFO, storeLocatorModels);
             resultReceiver.send(Constant.API_RESPONSE_SUCCESSFUL, bundle);
         }
+        resultReceiver = null;
         stopSelf();
     }
 }
