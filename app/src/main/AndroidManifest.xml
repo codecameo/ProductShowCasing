@@ -32,14 +32,6 @@
 
         <service android:name="bytes.wit.services.ProductProviderService" />
 
-        <activity android:name=".StoreLocatorDetailActivity"
-            android:parentActivityName=".StoreLocatorListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StoreLocatorListActivity" />
-
-        </activity>
     </application>
 
 </manifest>

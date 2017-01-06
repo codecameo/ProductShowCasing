@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
 import bytes.wit.fragments.FragmentStoreList;
+import bytes.wit.fragments.FragmentStoreLocatorMap;
 import bytes.wit.models.StoreLocatorModel;
 
 /**
@@ -21,15 +22,13 @@ public class StoreLocatorActivity extends BaseActivity implements FragmentStoreL
 
         setupToolbar();
         addStoreLocatorFragment();
-
-
     }
 
     private void addStoreLocatorFragment() {
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Replace the contents of the container with the new fragment
-        ft.replace(R.id.store_locator_content, new FragmentStoreList());
+        ft.add(R.id.store_locator_content, new FragmentStoreList());
         // Complete the changes added above
         ft.commit();
     }
@@ -46,6 +45,16 @@ public class StoreLocatorActivity extends BaseActivity implements FragmentStoreL
 
     @Override
     public void onListFragmentInteraction(StoreLocatorModel storeLocatorModel) {
+        showStoreMap(storeLocatorModel);
+    }
 
+    private void showStoreMap(StoreLocatorModel storeLocatorModel) {
+        // Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        // Replace the contents of the container with the new fragment
+        ft.replace(R.id.store_locator_content, new FragmentStoreLocatorMap());
+        // Complete the changes added above
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

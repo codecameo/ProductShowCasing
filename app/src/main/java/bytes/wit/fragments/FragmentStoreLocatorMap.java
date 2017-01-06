@@ -1,11 +1,9 @@
-package bytes.wit.showcasing.fragment;
+package bytes.wit.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import bytes.wit.showcasing.R;
 
@@ -14,17 +12,17 @@ import bytes.wit.showcasing.R;
  * Email: sharif.iit.du@gmail.com
  */
 
-public class StoreLocatorDetailFragment extends android.support.v4.app.Fragment {
+public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment {
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public StoreLocatorDetailFragment() {
+    public FragmentStoreLocatorMap() {
     }
 
-    public static StoreLocatorDetailFragment newInstance() {
-        StoreLocatorDetailFragment fragment = new StoreLocatorDetailFragment();
+    public static FragmentStoreLocatorMap newInstance() {
+        FragmentStoreLocatorMap fragment = new FragmentStoreLocatorMap();
         return fragment;
     }
 
