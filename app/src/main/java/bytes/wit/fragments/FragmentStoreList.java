@@ -80,7 +80,8 @@ public class FragmentStoreList extends Fragment implements IStoreLocatorCommunic
 
     @Override
     public void updateListData(ArrayList<StoreLocatorModel> storeLocatorModels) {
-        mStoreLocatorAdapter.update(storeLocatorModels);
+        if (storeLocatorModels != null)
+            mStoreLocatorAdapter.update(storeLocatorModels);
     }
 
     /**

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +27,7 @@ import static bytes.wit.utils.Constant.ACTION;
 
 public class StoreLocationProviderService extends IntentService {
 
-    private ResultReceiver resultReceiver;
+    private WeakReference<ResultReceiver> resultReceiver;
     private int action;
 
     public StoreLocationProviderService() {
@@ -36,7 +37,7 @@ public class StoreLocationProviderService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        resultReceiver = intent.getParcelableExtra(StoreLocationProviderAdapter.SHOWROOM_RESULT_RECEIVER);
+        resultReceiver = new WeakReference<>((ResultReceiver) intent.getParcelableExtra(StoreLocationProviderAdapter.SHOWROOM_RESULT_RECEIVER));
         action = intent.getIntExtra(ACTION, 0);
 
         if (action == StoreLocationProviderAdapter.ALL_SHOWROOM_ACTION) {
@@ -67,11 +68,11 @@ public class StoreLocationProviderService extends IntentService {
     }
 
     private void sendAllStoreData(ArrayList<StoreLocatorModel> storeLocatorModels) {
-        if (resultReceiver != null) {
+        if (resultReceiver.get() != null) {
             Bundle bundle = new Bundle();
             bundle.putInt(ACTION, action);
             bundle.putSerializable(StoreLocationProviderAdapter.KEY_SHOWROOM_INFO, storeLocatorModels);
-            resultReceiver.send(Constant.API_RESPONSE_SUCCESSFUL, bundle);
+            resultReceiver.get().send(Constant.API_RESPONSE_SUCCESSFUL, bundle);
         }
         resultReceiver = null;
         stopSelf();

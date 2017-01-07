@@ -6,6 +6,8 @@ import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class StoreLocatorActivity extends BaseActivity implements FragmentStoreL
     private ILocationProvider mILocationProvider;
     private ArrayList<StoreLocatorModel> mStoreLocatorModels;
     private FragmentStoreList mFragmentStoreList;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,11 +40,17 @@ public class StoreLocatorActivity extends BaseActivity implements FragmentStoreL
 
         setupToolbar();
 
+        initViews();
+
         initVariables();
 
         addStoreLocatorFragment();
 
         getData();
+    }
+
+    private void initViews() {
+        mProgressBar = (ProgressBar) findViewById(R.id.loader);
     }
 
     private void getData() {
@@ -101,7 +110,7 @@ public class StoreLocatorActivity extends BaseActivity implements FragmentStoreL
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             super.onReceiveResult(resultCode, resultData);
             mStoreLocatorModels = (ArrayList<StoreLocatorModel>) resultData.getSerializable(StoreLocationProviderAdapter.KEY_SHOWROOM_INFO);
-
+            mProgressBar.setVisibility(View.GONE);
             if (mFragmentStoreList != null) {
                 ((IStoreLocatorCommunicator) mFragmentStoreList).updateListData(mStoreLocatorModels);
             }

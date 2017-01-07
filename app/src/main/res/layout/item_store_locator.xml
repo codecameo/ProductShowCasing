@@ -1,31 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/text_margin"
-    android:orientation="vertical">
+    android:layout_marginLeft="@dimen/text_margin"
+    android:padding="@dimen/location_item_padding">
 
     <TextView
-        android:padding="@dimen/location_item_padding"
         android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Address"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="@dimen/abc_text_size_title_material" />
 
     <TextView
-        android:padding="@dimen/location_item_padding"
         android:id="@+id/tv_district"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tv_address"
+        android:layout_marginBottom="@dimen/location_item_padding"
         android:text="mobile"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="@dimen/abc_text_size_body_1_material" />
 
-    <TextView
-        android:padding="@dimen/location_item_padding"
-        android:id="@+id/tv_mobile"
+    <ImageView
+        android:id="@+id/iv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="mobile"
-        android:textAppearance="?attr/textAppearanceListItem" />
-</LinearLayout>
+        android:layout_alignBottom="@+id/tv_mobile"
+        android:layout_alignTop="@id/tv_mobile"
+        android:layout_below="@id/tv_district"
+        android:src="@drawable/ic_phone" />
+
+    <TextView
+        android:id="@id/tv_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_district"
+        android:layout_marginBottom="@dimen/location_item_padding"
+        android:layout_marginLeft="@dimen/location_item_padding"
+        android:layout_marginTop="@dimen/location_item_padding"
+        android:layout_toRightOf="@id/iv_phone"
+        android:background="@drawable/rectangular_background"
+        android:gravity="center"
+        android:padding="@dimen/location_item_padding"
+        android:text="01682425474"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/abc_text_size_caption_material" />
+
+
+    <ImageView
+        android:id="@+id/iv_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_mobile"
+        android:layout_alignTop="@id/tv_mobile"
+        android:layout_below="@id/tv_district"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/location_item_padding"
+        android:src="@drawable/ic_near_me" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_district"
+        android:layout_marginBottom="@dimen/location_item_padding"
+        android:layout_marginLeft="@dimen/location_item_padding"
+        android:layout_marginTop="@dimen/location_item_padding"
+        android:layout_toRightOf="@id/iv_distance"
+        android:background="@drawable/rectangular_background"
+        android:gravity="center"
+        android:padding="@dimen/location_item_padding"
+        android:text="17 KM"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/abc_text_size_caption_material" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tv_mobile"
+        android:background="#dadada" />
+
+</RelativeLayout>

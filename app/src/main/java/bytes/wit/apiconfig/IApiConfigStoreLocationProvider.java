@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface IApiConfigStoreLocationProvider {
 
-    @GET("showrooms")
+    @GET("json.txt")
     Call<ArrayList<StoreLocatorModel>> getAllShowroom();
 
     @GET("store/{suffix}")
