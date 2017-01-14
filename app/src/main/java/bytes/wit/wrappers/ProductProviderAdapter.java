@@ -24,17 +24,12 @@ public class ProductProviderAdapter implements IProductProvider {
     public static final String KEY_CATEGORIZED_PRODUCT = "categorized_product";
     public static final String KEY_POPULAR_PRODUCT = "popular_product";
 
-    private Context mContext;
-    private ResultReceiver mReceiver;
     private WeakReference<Context> mContextWeakReference;
     private WeakReference<ResultReceiver> mResultReceiverWeakReference;
 
     public ProductProviderAdapter(Context context, ResultReceiver receiver) {
         mContextWeakReference = new WeakReference<>(context);
         mResultReceiverWeakReference = new WeakReference<>(receiver);
-        mContext = mContextWeakReference.get();
-        mReceiver = mResultReceiverWeakReference.get();
-
     }
 
     @Override
@@ -51,18 +46,18 @@ public class ProductProviderAdapter implements IProductProvider {
 
     @Override
     public void getCategorizedProductList() {
-        Intent intent = new Intent(mContext, ProductProviderService.class);
-        intent.putExtra(PRODUCT_RESULT_RECEIVER, mReceiver);
+        Intent intent = new Intent(mContextWeakReference.get(), ProductProviderService.class);
+        intent.putExtra(PRODUCT_RESULT_RECEIVER, mResultReceiverWeakReference.get());
         intent.putExtra(ACTION, CATEGORIZED_PRODUCT_ACTION);
-        mContext.startService(intent);
+        mContextWeakReference.get().startService(intent);
     }
 
     @Override
     public void getPopularProductList() {
-        Intent intent = new Intent(mContext, PopularProductProviderService.class);
-        intent.putExtra(PRODUCT_RESULT_RECEIVER, mReceiver);
+        Intent intent = new Intent(mContextWeakReference.get(), PopularProductProviderService.class);
+        intent.putExtra(PRODUCT_RESULT_RECEIVER, mResultReceiverWeakReference.get());
         intent.putExtra(ACTION, POPULAR_PRODUCT_ACTION);
-        mContext.startService(intent);
+        mContextWeakReference.get().startService(intent);
     }
 
     @Override

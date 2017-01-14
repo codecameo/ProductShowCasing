@@ -2,11 +2,13 @@ package bytes.wit.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Md. Sifat-Ul Haque on 1/4/2017.
  */
 
-public class StoreLocatorModel {
+public class StoreLocatorModel implements Serializable {
 
     @SerializedName("address")
     private String store_address;

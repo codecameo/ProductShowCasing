@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import bytes.wit.apiconfig.ApiClient;
@@ -27,7 +28,7 @@ import static bytes.wit.utils.Constant.ACTION;
 public class ProductProviderService extends IntentService {
 
     private ArrayList<CategoryModel> mCategoryModels;
-    private ResultReceiver resultReceiver;
+    private WeakReference<ResultReceiver> resultReceiver;
     private int action;
 
     public ProductProviderService() {
@@ -37,9 +38,8 @@ public class ProductProviderService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d("Service", "Fetching data");
-        resultReceiver = intent.getParcelableExtra(ProductProviderAdapter.PRODUCT_RESULT_RECEIVER);
+        resultReceiver = new WeakReference<>((ResultReceiver) intent.getParcelableExtra(ProductProviderAdapter.PRODUCT_RESULT_RECEIVER));
         action = intent.getIntExtra(ACTION, 0);
-
         fetchCategorizedProductList();
     }
 
@@ -100,11 +100,11 @@ public class ProductProviderService extends IntentService {
     }
 
     private void sendProductData() {
-        if (resultReceiver != null) {
+        if (resultReceiver.get() != null) {
             Bundle bundle = new Bundle();
             bundle.putInt(ACTION, action);
             bundle.putSerializable(ProductProviderAdapter.KEY_CATEGORIZED_PRODUCT, mCategoryModels);
-            resultReceiver.send(Constant.API_RESPONSE_SUCCESSFUL, bundle);
+            resultReceiver.get().send(Constant.API_RESPONSE_SUCCESSFUL, bundle);
         }
         stopSelf();
     }

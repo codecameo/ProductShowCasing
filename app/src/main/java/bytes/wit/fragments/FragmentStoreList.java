@@ -96,7 +96,7 @@ public class FragmentStoreList extends Fragment implements IStoreLocatorCommunic
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(StoreLocatorModel storeLocatorModel);
+        void onListFragmentInteraction(int position);
     }
 
 }

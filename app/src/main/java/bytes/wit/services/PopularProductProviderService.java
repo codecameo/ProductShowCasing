@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import bytes.wit.apiconfig.ApiClient;
@@ -24,7 +25,7 @@ import static bytes.wit.utils.Constant.ACTION;
 
 public class PopularProductProviderService extends IntentService {
 
-    private ResultReceiver resultReceiver;
+    private WeakReference<ResultReceiver> resultReceiver;
     private int action;
     private ArrayList<ProductModel> mProductModels;
 
@@ -35,7 +36,7 @@ public class PopularProductProviderService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        resultReceiver = intent.getParcelableExtra(ProductProviderAdapter.PRODUCT_RESULT_RECEIVER);
+        resultReceiver = new WeakReference<>((ResultReceiver) intent.getParcelableExtra(ProductProviderAdapter.PRODUCT_RESULT_RECEIVER));
         action = intent.getIntExtra(ACTION, 0);
 
         fetchPopularProductList();
@@ -69,11 +70,11 @@ public class PopularProductProviderService extends IntentService {
     }
 
     private void sendProductData() {
-        if (resultReceiver != null) {
+        if (resultReceiver.get() != null) {
             Bundle bundle = new Bundle();
             bundle.putInt(ACTION, action);
             bundle.putSerializable(ProductProviderAdapter.KEY_POPULAR_PRODUCT, mProductModels);
-            resultReceiver.send(Constant.API_RESPONSE_SUCCESSFUL, bundle);
+            resultReceiver.get().send(Constant.API_RESPONSE_SUCCESSFUL, bundle);
         }
         stopSelf();
     }

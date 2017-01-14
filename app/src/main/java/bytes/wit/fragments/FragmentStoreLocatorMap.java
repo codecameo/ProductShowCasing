@@ -6,11 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
+import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.showcasing.R;
 
 /**
@@ -20,8 +27,14 @@ import bytes.wit.showcasing.R;
 
 public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    private static final String KEY_STORE_LOCATION = "key_store_location";
+    private static final String KEY_SELECTED_STORE_POSITION = "key_store_selection_position";
+    private GoogleMap mGoogleMap;
+    private int mSelectedPosition;
     private UiSettings mUiSettings;
+    private ArrayList<StoreLocatorModel> mStoreLocatorModels;
+    private LatLng mStoreLocation;
+    private CameraPosition mCameraPosition;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -30,11 +43,33 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     public FragmentStoreLocatorMap() {
     }
 
-    public static FragmentStoreLocatorMap newInstance() {
+    public static FragmentStoreLocatorMap newInstance(ArrayList<StoreLocatorModel> storeLocatorModel, int position) {
         FragmentStoreLocatorMap fragment = new FragmentStoreLocatorMap();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY_STORE_LOCATION, storeLocatorModel);
+        bundle.putInt(KEY_SELECTED_STORE_POSITION, position);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initVariable();
+    }
+
+    private void initVariable() {
+
+        Bundle bundle = new Bundle();
+        bundle = getArguments();
+
+        if (bundle.containsKey(KEY_STORE_LOCATION)) {
+            mStoreLocatorModels = (ArrayList<StoreLocatorModel>) getArguments().getSerializable(KEY_STORE_LOCATION);
+            mSelectedPosition = bundle.getInt(KEY_SELECTED_STORE_POSITION);
+            mStoreLocation = new LatLng(mStoreLocatorModels.get(mSelectedPosition).getLatitude(), mStoreLocatorModels.get(mSelectedPosition).getLongitude());
+            //Toast.makeText(getContext(),"Lat "+ mStoreLocatorModels.getLatitude(),Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,17 +98,39 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mUiSettings = mMap.getUiSettings();
+        mGoogleMap = googleMap;
+        mUiSettings = mGoogleMap.getUiSettings();
         mapUiSetting(true);
+        locateStore();
 
+    }
+
+    private void locateStore() {
+        if (mStoreLocation != null) {
+            mCameraPosition = new CameraPosition.Builder()
+                    .target(mStoreLocation)
+                    .zoom(16)
+                    .build();
+
+            mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition));
+
+            mGoogleMap.clear();
+
+            int size = mStoreLocatorModels.size();
+
+            for (int i = 0; i < size; i++) {
+                mGoogleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(mStoreLocatorModels.get(i).getLatitude(), mStoreLocatorModels.get(i).getLongitude()))
+                        .title(mStoreLocatorModels.get(i).getStore_address()));
+            }
+        }
     }
 
     //UI settings of map
     private void mapUiSetting(boolean flag) {
 
-        //mMap.setMyLocationEnabled(flag);
-        mMap.setBuildingsEnabled(flag);
+        //mGoogleMap.setMyLocationEnabled(flag);
+        mGoogleMap.setBuildingsEnabled(flag);
         mUiSettings.setZoomControlsEnabled(flag);
         mUiSettings.setCompassEnabled(flag);
         mUiSettings.setMyLocationButtonEnabled(flag);
@@ -81,5 +138,7 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
         mUiSettings.setZoomGesturesEnabled(flag);
         mUiSettings.setTiltGesturesEnabled(flag);
         mUiSettings.setRotateGesturesEnabled(flag);
+
+        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
     }
 }

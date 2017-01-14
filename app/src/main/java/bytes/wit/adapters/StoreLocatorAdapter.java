@@ -77,7 +77,7 @@ public class StoreLocatorAdapter extends RecyclerView.Adapter<StoreLocatorAdapte
         @Override
         public void onClick(View view) {
             if (mListener != null) {
-                mListener.onListFragmentInteraction(mStoreLocatorModels.get(getAdapterPosition()));
+                mListener.onListFragmentInteraction(getAdapterPosition());
             }
         }
     }

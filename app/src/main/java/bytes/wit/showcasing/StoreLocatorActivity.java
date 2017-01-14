@@ -86,15 +86,15 @@ public class StoreLocatorActivity extends BaseActivity implements FragmentStoreL
     }
 
     @Override
-    public void onListFragmentInteraction(StoreLocatorModel storeLocatorModel) {
-        showStoreMap(storeLocatorModel);
+    public void onListFragmentInteraction(int position) {
+        showStoreMap(position);
     }
 
-    private void showStoreMap(StoreLocatorModel storeLocatorModel) {
+    private void showStoreMap(int position) {
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Replace the contents of the container with the new fragment
-        ft.replace(R.id.store_locator_content, new FragmentStoreLocatorMap());
+        ft.replace(R.id.store_locator_content, FragmentStoreLocatorMap.newInstance(mStoreLocatorModels, position));
         // Complete the changes added above
         ft.addToBackStack(null);
         ft.commit();
