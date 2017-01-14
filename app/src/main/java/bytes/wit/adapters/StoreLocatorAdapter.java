@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import bytes.wit.fragments.FragmentStoreList.OnListFragmentInteractionListener;
@@ -45,7 +44,7 @@ public class StoreLocatorAdapter extends RecyclerView.Adapter<StoreLocatorAdapte
         return mStoreLocatorModels.size();
     }
 
-    public void update(ArrayList<StoreLocatorModel> storeLocatorModels) {
+    public void update(List<StoreLocatorModel> storeLocatorModels) {
         mStoreLocatorModels = storeLocatorModels;
         notifyDataSetChanged();
     }

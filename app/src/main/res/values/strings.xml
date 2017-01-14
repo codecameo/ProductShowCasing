@@ -20,5 +20,6 @@
     <string name="nav_offers">Offers</string>
     <string name="nav_purchases">Purchases</string>
     <string name="text_store_location">Store Location</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

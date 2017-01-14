@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 import bytes.wit.adapters.StoreLocatorAdapter;
 import bytes.wit.interfaces.IStoreLocatorCommunicator;
@@ -27,6 +27,7 @@ public class FragmentStoreList extends Fragment implements IStoreLocatorCommunic
     private RecyclerView mRvStoreList;
     private FragmentStoreList.OnListFragmentInteractionListener mListener;
     private StoreLocatorAdapter mStoreLocatorAdapter;
+    private List<StoreLocatorModel> mStoreLocatorModels = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class FragmentStoreList extends Fragment implements IStoreLocatorCommunic
     }
 
     private void initVariable() {
-        mStoreLocatorAdapter = new StoreLocatorAdapter(Collections.EMPTY_LIST, mListener);
+        mStoreLocatorAdapter = new StoreLocatorAdapter(mStoreLocatorModels, mListener);
     }
 
     private void setupAdapter() {
@@ -80,8 +81,11 @@ public class FragmentStoreList extends Fragment implements IStoreLocatorCommunic
 
     @Override
     public void updateListData(ArrayList<StoreLocatorModel> storeLocatorModels) {
-        if (storeLocatorModels != null)
-            mStoreLocatorAdapter.update(storeLocatorModels);
+        if (storeLocatorModels != null) {
+            mStoreLocatorModels.clear();
+            mStoreLocatorModels.addAll(storeLocatorModels);
+            mStoreLocatorAdapter.update(mStoreLocatorModels);
+        }
     }
 
     /**
