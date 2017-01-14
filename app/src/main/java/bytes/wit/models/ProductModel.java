@@ -10,8 +10,10 @@ import java.util.ArrayList;
 public class ProductModel implements Serializable {
 
     private String product_id, category_id, product_name, validity, ingredient, description, offer_validation_date;
+    private ContentModel poster;
     private ArrayList<ContentImageModel> content_images;
     private ArrayList<ContentVideoModel> content_videos;
+    private ArrayList<PackageModel> packages;
 
     public String getProduct_id() {
         return product_id;
@@ -83,5 +85,21 @@ public class ProductModel implements Serializable {
 
     public void setContent_videos(ArrayList<ContentVideoModel> content_videos) {
         this.content_videos = content_videos;
+    }
+
+    public ContentModel getPoster() {
+        return poster;
+    }
+
+    public void setPoster(ContentModel poster) {
+        this.poster = poster;
+    }
+
+    public ArrayList<PackageModel> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(ArrayList<PackageModel> packages) {
+        this.packages = packages;
     }
 }

@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import bytes.wit.fragments.FragmentBrandNew;
 import bytes.wit.fragments.FragmentHome;
 import bytes.wit.fragments.FragmentPopular;
 
@@ -61,14 +62,13 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         mHomeViewPager = (ViewPager) findViewById(R.id.vp_home);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
     }
 
     private void initViewPager() {
 
         mPagerAdapter.addFragment(new FragmentHome(), getString(R.string.tab_home));
         mPagerAdapter.addFragment(new FragmentPopular(), getString(R.string.tab_popular));
-        //mPagerAdapter.addFragment(new FragmentHome(), getString(R.string.tab_brand_new));
+        mPagerAdapter.addFragment(new FragmentBrandNew(), getString(R.string.tab_brand_new));
         mHomeViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mHomeViewPager);
     }

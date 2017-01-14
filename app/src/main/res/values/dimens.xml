@@ -14,4 +14,12 @@
 
     <dimen name="location_item_padding">6dp</dimen>
 
+    <dimen name="list_item_margin">8dp</dimen>
+    <dimen name="home_category_name_text">20sp</dimen>
+
+    <dimen name="default_card_elevation">4dp</dimen>
+    <dimen name="default_card_radius">8dp</dimen>
+    <dimen name="list_item_bottom_margin">10dp</dimen>
+
+
 </resources>

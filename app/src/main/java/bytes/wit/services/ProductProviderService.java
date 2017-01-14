@@ -87,17 +87,16 @@ public class ProductProviderService extends IntentService {
             @Override
             public void onResponse(Call<CategoryModel> call, Response<CategoryModel> response) {
                 //List<ProductModel> movies = response.body().getProducts();
+                sendProductData();
             }
 
             @Override
             public void onFailure(Call<CategoryModel> call, Throwable t) {
                 // Log error here since request failed
                 //Log.e(TAG, t.toString());
+                sendProductData();
             }
         });
-
-
-        sendProductData();
     }
 
     private void sendProductData() {

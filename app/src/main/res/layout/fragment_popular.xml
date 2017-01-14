@@ -4,13 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_product_package_list"
         android:layout_width="match_parent"
-        android:layout_height="216dp"
-        android:background="@color/colorAccent" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="216dp"
-        android:background="@color/colorAccent" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/list_item_margin" />
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.os.ResultReceiver;
 import java.lang.ref.WeakReference;
 
 import bytes.wit.interfaces.IProductProvider;
+import bytes.wit.services.PopularProductProviderService;
 import bytes.wit.services.ProductProviderService;
 
 import static bytes.wit.utils.Constant.ACTION;
@@ -19,7 +20,9 @@ public class ProductProviderAdapter implements IProductProvider {
 
     public static final String PRODUCT_RESULT_RECEIVER = "product_result_receiver";
     public static final int CATEGORIZED_PRODUCT_ACTION = 1001;
+    public static final int POPULAR_PRODUCT_ACTION = 1002;
     public static final String KEY_CATEGORIZED_PRODUCT = "categorized_product";
+    public static final String KEY_POPULAR_PRODUCT = "popular_product";
 
     private Context mContext;
     private ResultReceiver mReceiver;
@@ -52,5 +55,18 @@ public class ProductProviderAdapter implements IProductProvider {
         intent.putExtra(PRODUCT_RESULT_RECEIVER, mReceiver);
         intent.putExtra(ACTION, CATEGORIZED_PRODUCT_ACTION);
         mContext.startService(intent);
+    }
+
+    @Override
+    public void getPopularProductList() {
+        Intent intent = new Intent(mContext, PopularProductProviderService.class);
+        intent.putExtra(PRODUCT_RESULT_RECEIVER, mReceiver);
+        intent.putExtra(ACTION, POPULAR_PRODUCT_ACTION);
+        mContext.startService(intent);
+    }
+
+    @Override
+    public void getNewProductList() {
+
     }
 }

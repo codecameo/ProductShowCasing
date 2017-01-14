@@ -13,4 +13,8 @@ public interface IProductProvider {
     void getFilteredProductList();
 
     void getCategorizedProductList();
+
+    void getPopularProductList();
+
+    void getNewProductList();
 }

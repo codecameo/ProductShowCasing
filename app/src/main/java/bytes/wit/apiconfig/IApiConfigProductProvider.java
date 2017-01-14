@@ -1,6 +1,7 @@
 package bytes.wit.apiconfig;
 
 import bytes.wit.models.CategoryModel;
+import bytes.wit.models.ProductModel;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -20,4 +21,12 @@ public interface IApiConfigProductProvider {
 
     @GET("data/2.5/weather")
     Call<CategoryModel> getCategorizedProductList(@Query("q") String city, @Query("appid") String apiKey);
+
+    @GET("data/2.5/weather")
+    Call<ProductModel> getPopularProductList(@Query("q") String city, @Query("appid") String apiKey);
+
+    @GET("data/2.5/weather")
+    Call<ProductModel> getBrandNewProductList(@Query("q") String city, @Query("appid") String apiKey);
+
+
 }

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class FragmentHome extends Fragment {
     private ProductResultReceiver mProductResultReceiver;
     private Handler mHandler;
     private CategoryModel mCategoryModel;
+    private ProgressBar mProgressBar;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class FragmentHome extends Fragment {
 
     private void initViews(View view) {
         mHomeList = (RecyclerView) view.findViewById(R.id.rv_home_product_list);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.loader);
     }
 
 
@@ -110,6 +113,7 @@ public class FragmentHome extends Fragment {
                 Toast.makeText(getActivity(), "Got data", Toast.LENGTH_SHORT).show();
                 ArrayList<CategoryModel> categoryModels = (ArrayList<CategoryModel>) resultData.getSerializable(ProductProviderAdapter.KEY_CATEGORIZED_PRODUCT);
                 mHomeCategorizedListAdapter.updateData(categoryModels);
+                mProgressBar.setVisibility(View.GONE);
             }
         }
     }
