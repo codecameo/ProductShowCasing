@@ -2,7 +2,6 @@ package bytes.wit.showcasing;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
@@ -17,13 +16,16 @@ import bytes.wit.fragments.FragmentStoreLocatorMap;
 import bytes.wit.interfaces.ILocationProvider;
 import bytes.wit.interfaces.IStoreLocatorCommunicator;
 import bytes.wit.models.StoreLocatorModel;
+import bytes.wit.receivers.StoreLocationReceiver;
 import bytes.wit.wrappers.StoreLocationProviderAdapter;
 
 /**
  * Created by Md. Sifat-Ul Haque on 1/4/2017.
  */
 
-public class StoreLocatorActivity extends BaseActivity implements FragmentStoreList.OnListFragmentInteractionListener {
+public class StoreLocatorActivity extends BaseActivity implements
+        FragmentStoreList.OnListFragmentInteractionListener,
+        StoreLocationReceiver.Receiver {
 
     private StoreLocationReceiver mStoreLocationReceiver;
     private Handler mHandler;
@@ -54,6 +56,7 @@ public class StoreLocatorActivity extends BaseActivity implements FragmentStoreL
     }
 
     private void getData() {
+        mStoreLocationReceiver.setReceiver(this);
         mILocationProvider.getAllShowroom();
     }
 
@@ -100,7 +103,16 @@ public class StoreLocatorActivity extends BaseActivity implements FragmentStoreL
         ft.commit();
     }
 
-    private class StoreLocationReceiver extends ResultReceiver {
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        mStoreLocatorModels = (ArrayList<StoreLocatorModel>) resultData.getSerializable(StoreLocationProviderAdapter.KEY_SHOWROOM_INFO);
+        mProgressBar.setVisibility(View.GONE);
+        if (mFragmentStoreList != null) {
+            ((IStoreLocatorCommunicator) mFragmentStoreList).updateListData(mStoreLocatorModels);
+        }
+    }
+
+    /*private class StoreLocationReceiver extends ResultReceiver {
 
         public StoreLocationReceiver(Handler handler) {
             super(handler);
@@ -115,5 +127,5 @@ public class StoreLocatorActivity extends BaseActivity implements FragmentStoreL
                 ((IStoreLocatorCommunicator) mFragmentStoreList).updateListData(mStoreLocatorModels);
             }
         }
-    }
+    }*/
 }

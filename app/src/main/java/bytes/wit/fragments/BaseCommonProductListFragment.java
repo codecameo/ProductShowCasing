@@ -2,7 +2,6 @@ package bytes.wit.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,14 +14,15 @@ import android.widget.Toast;
 import bytes.wit.adapters.CommonProductPackageAdapter;
 import bytes.wit.factories.ProviderFactory;
 import bytes.wit.interfaces.IProductProvider;
+import bytes.wit.receivers.ProductResultReceiver;
 import bytes.wit.showcasing.R;
-import bytes.wit.utils.Constant;
 
 /**
  * Created by Md. Sifat-Ul Haque on 1/14/2017.
  */
 
-public abstract class BaseCommonProductListFragment extends Fragment {
+public class BaseCommonProductListFragment extends Fragment implements
+        ProductResultReceiver.Receiver {
 
     private RecyclerView mRvProductPackageList;
     private CommonProductPackageAdapter mProductPackageAdapter;
@@ -51,7 +51,9 @@ public abstract class BaseCommonProductListFragment extends Fragment {
     private void setDefaultValues() {
     }
 
-    protected abstract void fetchData();
+    protected void fetchData() {
+        mProductResultReceiver.setReceiver(this);
+    }
 
     private void initVariables() {
         mHandler = new Handler();
@@ -70,7 +72,12 @@ public abstract class BaseCommonProductListFragment extends Fragment {
         mRvProductPackageList = (RecyclerView) view.findViewById(R.id.rv_product_package_list);
     }
 
-    private class ProductResultReceiver extends ResultReceiver {
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        Toast.makeText(getActivity(), "Got data", Toast.LENGTH_SHORT).show();
+    }
+
+    /*private class ProductResultReceiver extends ResultReceiver {
 
         public ProductResultReceiver(Handler handler) {
             super(handler);
@@ -84,6 +91,6 @@ public abstract class BaseCommonProductListFragment extends Fragment {
                 //mHomeCategorizedListAdapter.updateData(categoryModels);
             }
         }
-    }
+    }*/
 
 }

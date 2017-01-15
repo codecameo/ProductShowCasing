@@ -8,6 +8,7 @@ public class FragmentPopular extends BaseCommonProductListFragment {
 
     @Override
     protected void fetchData() {
+        super.fetchData();
         mIProductProvider.getPopularProductList();
     }
 }

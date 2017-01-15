@@ -2,7 +2,6 @@ package bytes.wit.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +19,7 @@ import bytes.wit.adapters.HomeCategorizedListAdapter;
 import bytes.wit.factories.ProviderFactory;
 import bytes.wit.interfaces.IProductProvider;
 import bytes.wit.models.CategoryModel;
+import bytes.wit.receivers.ProductResultReceiver;
 import bytes.wit.showcasing.R;
 import bytes.wit.utils.Constant;
 import bytes.wit.wrappers.ProductProviderAdapter;
@@ -29,7 +29,7 @@ import cameo.code.imageslider.SliderFragment;
  * Created by Md. Sifat-Ul Haque on 12/28/2016.
  */
 
-public class FragmentHome extends Fragment {
+public class FragmentHome extends Fragment implements ProductResultReceiver.Receiver {
 
     private ArrayList<String> mImagesUrl;
     private SliderFragment mSliderFragment;
@@ -80,6 +80,7 @@ public class FragmentHome extends Fragment {
         mImagesUrl.add("http://www.dancake.com.bd/images/home-slider/1479303820_th_2.jpg");
         mImagesUrl.add("http://www.dancake.com.bd/images/home-slider/1479303916_th_3.jpg");
 
+        mProductResultReceiver.setReceiver(this);
         mIProductProvider.getCategorizedProductList();
 
     }
@@ -100,22 +101,13 @@ public class FragmentHome extends Fragment {
         mProgressBar = (ProgressBar) view.findViewById(R.id.loader);
     }
 
-
-    private class ProductResultReceiver extends ResultReceiver {
-
-        public ProductResultReceiver(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if (Constant.API_RESPONSE_SUCCESSFUL == resultCode) {
-                Toast.makeText(getActivity(), "Got data", Toast.LENGTH_SHORT).show();
-                ArrayList<CategoryModel> categoryModels = (ArrayList<CategoryModel>) resultData.getSerializable(ProductProviderAdapter.KEY_CATEGORIZED_PRODUCT);
-                mHomeCategorizedListAdapter.updateData(categoryModels);
-                mProgressBar.setVisibility(View.GONE);
-            }
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        if (Constant.API_RESPONSE_SUCCESSFUL == resultCode) {
+            Toast.makeText(getActivity(), "Got data", Toast.LENGTH_SHORT).show();
+            ArrayList<CategoryModel> categoryModels = (ArrayList<CategoryModel>) resultData.getSerializable(ProductProviderAdapter.KEY_CATEGORIZED_PRODUCT);
+            mHomeCategorizedListAdapter.updateData(categoryModels);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
-
 }

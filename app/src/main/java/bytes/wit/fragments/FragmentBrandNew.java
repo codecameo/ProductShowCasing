@@ -8,6 +8,7 @@ public class FragmentBrandNew extends BaseCommonProductListFragment {
 
     @Override
     protected void fetchData() {
+        super.fetchData();
         mIProductProvider.getNewProductList();
     }
 }
