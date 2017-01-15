@@ -37,6 +37,11 @@
             android:label="@string/text_store_location"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".ShowProductListActivity"
+            android:label="@string/text_product_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <service android:name="bytes.wit.services.ProductProviderService" />
         <service android:name="bytes.wit.services.StoreLocationProviderService" />
         <service android:name="bytes.wit.services.PopularProductProviderService" />

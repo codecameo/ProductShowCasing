@@ -22,5 +22,6 @@
     <string name="text_store_location">Store Location</string>
     <string name="title_activity_maps">Map</string>
     <string name="text_view_detail">View Detail</string>
+    <string name="text_product_list">Show Product List</string>
 
 </resources>

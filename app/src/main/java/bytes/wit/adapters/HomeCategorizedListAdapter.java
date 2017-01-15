@@ -17,9 +17,11 @@ import bytes.wit.viewholder.CategoryViewHolder;
 public class HomeCategorizedListAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
     private ArrayList<CategoryModel> mCategoryModels;
+    private CategoryViewHolder.OnViewAllProductList mOnViewAllProductList;
 
-    public HomeCategorizedListAdapter() {
+    public HomeCategorizedListAdapter(CategoryViewHolder.OnViewAllProductList onViewAllProductList) {
         mCategoryModels = new ArrayList<>();
+        mOnViewAllProductList = onViewAllProductList;
     }
 
     @Override
@@ -34,7 +36,10 @@ public class HomeCategorizedListAdapter extends RecyclerView.Adapter<CategoryVie
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         //if (viewType == R.layout.item_home_list)
-            return new CategoryViewHolder(LayoutInflater.from(parent.getContext()).inflate(viewType,parent,false));
+
+        CategoryViewHolder categoryViewHolder = new CategoryViewHolder(LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false));
+        categoryViewHolder.setOnViewAllProductList(mOnViewAllProductList);
+        return categoryViewHolder;
         /*else
             return new SliderViewHolder(LayoutInflater.from(parent.getContext()).inflate(viewType,parent,false));*/
     }

@@ -70,6 +70,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         mPagerAdapter.addFragment(new FragmentPopular(), getString(R.string.tab_popular));
         mPagerAdapter.addFragment(new FragmentBrandNew(), getString(R.string.tab_brand_new));
         mHomeViewPager.setAdapter(mPagerAdapter);
+        mHomeViewPager.setOffscreenPageLimit(2);
         mTabLayout.setupWithViewPager(mHomeViewPager);
     }
 

@@ -1,5 +1,6 @@
 package bytes.wit.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,15 +21,19 @@ import bytes.wit.interfaces.IProductProvider;
 import bytes.wit.models.CategoryModel;
 import bytes.wit.receivers.ProductResultReceiver;
 import bytes.wit.showcasing.R;
+import bytes.wit.showcasing.ShowProductListActivity;
 import bytes.wit.utils.Constant;
+import bytes.wit.viewholder.CategoryViewHolder;
 import bytes.wit.wrappers.ProductProviderAdapter;
 import cameo.code.imageslider.SliderFragment;
+
+import static bytes.wit.showcasing.ShowProductListActivity.KEY_PRODUCT_LIST;
 
 /**
  * Created by Md. Sifat-Ul Haque on 12/28/2016.
  */
 
-public class FragmentHome extends Fragment implements ProductResultReceiver.Receiver {
+public class FragmentHome extends Fragment implements ProductResultReceiver.Receiver, CategoryViewHolder.OnViewAllProductList {
 
     private ArrayList<String> mImagesUrl;
     private SliderFragment mSliderFragment;
@@ -89,7 +93,7 @@ public class FragmentHome extends Fragment implements ProductResultReceiver.Rece
     private void initVariables() {
         mImagesUrl = new ArrayList<>();
         mSliderFragment = SliderFragment.createWithPath(mImagesUrl);
-        mHomeCategorizedListAdapter = new HomeCategorizedListAdapter();
+        mHomeCategorizedListAdapter = new HomeCategorizedListAdapter(this);
         mProviderFactory = ProviderFactory.getProviderInstance();
         mHandler = new Handler();
         mProductResultReceiver = new ProductResultReceiver(mHandler);
@@ -104,10 +108,19 @@ public class FragmentHome extends Fragment implements ProductResultReceiver.Rece
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if (Constant.API_RESPONSE_SUCCESSFUL == resultCode) {
-            Toast.makeText(getActivity(), "Got data", Toast.LENGTH_SHORT).show();
             ArrayList<CategoryModel> categoryModels = (ArrayList<CategoryModel>) resultData.getSerializable(ProductProviderAdapter.KEY_CATEGORIZED_PRODUCT);
             mHomeCategorizedListAdapter.updateData(categoryModels);
             mProgressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onViewAllSelected(CategoryModel categoryModel) {
+
+        Intent intent = new Intent(getActivity(), ShowProductListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY_PRODUCT_LIST, categoryModel);
+        intent.putExtras(bundle);
+        getActivity().startActivity(intent);
     }
 }
