@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import bytes.wit.interfaces.SearchFragmentCommunicator;
+import bytes.wit.showcasing.HomeActivity;
 import bytes.wit.showcasing.R;
 import bytes.wit.utils.Utils;
 
@@ -16,7 +18,7 @@ import bytes.wit.utils.Utils;
  * Created by Md. Sifat-Ul Haque on 1/16/2017.
  */
 
-public class FragmentSearch extends Fragment implements View.OnClickListener {
+public class FragmentSearch extends Fragment implements View.OnClickListener, SearchFragmentCommunicator {
 
     private Communicator mCommunicator;
     private ImageView mIvSearchBack;
@@ -34,12 +36,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initListeners();
-        //initDefaultView();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         initDefaultView();
     }
 
@@ -51,6 +47,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
 
     private void initListeners() {
         mIvSearchBack.setOnClickListener(this);
+        ((HomeActivity) getActivity()).setSearchFragmentCommunicator(this);
     }
 
     private void initViews(View view) {
@@ -66,6 +63,11 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         Utils.hideKeyboard(getActivity());
         mCommunicator.onSearchBackPressed();
+    }
+
+    @Override
+    public void onSearchBarOpen() {
+        initDefaultView();
     }
 
     public interface Communicator {

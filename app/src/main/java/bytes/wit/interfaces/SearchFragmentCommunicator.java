@@ -6,5 +6,6 @@ package bytes.wit.interfaces;
 
 public interface SearchFragmentCommunicator {
 
+    void onSearchBarOpen();
 
 }

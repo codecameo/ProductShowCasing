@@ -26,6 +26,7 @@ import bytes.wit.fragments.FragmentBrandNew;
 import bytes.wit.fragments.FragmentHome;
 import bytes.wit.fragments.FragmentPopular;
 import bytes.wit.fragments.FragmentSearch;
+import bytes.wit.interfaces.SearchFragmentCommunicator;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentSearch.Communicator {
 
@@ -42,6 +43,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private float mRadius;
     private View mParent;
     private FragmentSearch mFragmentSearch;
+    private SearchFragmentCommunicator mSearchFragmentCommunicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         setupToolbar();
         initViews();
         initVariables();
+        initSearchFragment();
         initListeners();
         initViewPager();
 
@@ -64,11 +67,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Replace the contents of the container with the new fragment
-        if (getSupportFragmentManager().findFragmentById(R.id.fl_panel) == null) {
-            ft.add(R.id.fl_panel, mFragmentSearch, null).commit();
-        } else {
-            ft.replace(R.id.fl_panel, mFragmentSearch, null).commit();
-        }
+        ft.add(R.id.fl_panel, mFragmentSearch, null).commit();
+
     }
 
     private void initNavigationDrawer() {
@@ -162,6 +162,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (mSearchBarAnimationHelper.isVisible()) {
+            toggleSearchBar();
         } else {
             super.onBackPressed();
         }
@@ -197,11 +199,20 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         if (id == R.id.action_search) {
-
-            initSearchFragment();
-            mSearchBarAnimationHelper.startAnimation(mWidth - 24, 24, mRadius, 0);
+            if (mSearchFragmentCommunicator != null) {
+                mSearchFragmentCommunicator.onSearchBarOpen();
+            }
+            toggleSearchBar();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleSearchBar() {
+        mSearchBarAnimationHelper.startAnimation(mWidth - 24, 24, mRadius, 0);
+    }
+
+    public void setSearchFragmentCommunicator(SearchFragmentCommunicator mSearchFragmentCommunicator) {
+        this.mSearchFragmentCommunicator = mSearchFragmentCommunicator;
     }
 }
