@@ -36,7 +36,6 @@
             android:name=".StoreLocatorActivity"
             android:label="@string/text_store_location"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ShowProductListActivity"
             android:label="@string/text_product_list"
@@ -60,7 +59,16 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".LanguageSelectionActivity"
+            android:label="@string/title_activity_language_selection"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bytes.wit.showcasing.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

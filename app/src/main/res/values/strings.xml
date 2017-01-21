@@ -25,4 +25,12 @@
     <string name="text_product_list">Show Product List</string>
     <string name="text_search">Search</string>
 
+    <string name="button_save">Save</string>
+    <string name="tv_bangla">Bangla</string>
+    <string name="tv_english">English</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_language_selection">Language</string>
+
 </resources>
