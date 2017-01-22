@@ -6,7 +6,7 @@ import android.content.ContextWrapper;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.LocaleList;
-import android.util.Log;
+import android.text.TextUtils;
 
 import java.util.Locale;
 
@@ -30,11 +30,7 @@ public class LanguageContextWrapper extends ContextWrapper {
             sysLocale = getSystemLocaleLegacy(config);
         }
 
-        Log.d("Locality", "wrap 2 " + language + " " + sysLocale.getLanguage());
-
-        if (!language.equals("") && !sysLocale.getLanguage().equals(language)) {
-
-            Log.d("Locality", language + " ContextWrapper");
+        if (!TextUtils.isEmpty(language) && !sysLocale.getLanguage().equals(language)) {
 
             Locale locale = new Locale(language);
 
