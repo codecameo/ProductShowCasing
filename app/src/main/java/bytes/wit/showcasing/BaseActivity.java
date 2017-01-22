@@ -74,6 +74,30 @@ public class BaseActivity extends AppCompatActivity {
 
 
     /**
+     * Set toolbar into actionbar with it's specific id.
+     *
+     * @param id The toolbar id which is used to find toolbar for specific activity.
+     */
+    protected void setupToolbar(int id) {
+        if (toolbar == null) {
+            toolbar = (Toolbar) findViewById(id);
+        }
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+        actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white);
+        }
+    }
+
+
+    /**
      * Initialize the loader for Child class whenever necessary.
      */
     public void initProgressLoader() {

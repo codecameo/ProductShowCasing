@@ -21,5 +21,8 @@
     <dimen name="default_card_radius">8dp</dimen>
     <dimen name="list_item_bottom_margin">10dp</dimen>
 
+    <dimen name="tv_language_padding_left">24dp</dimen>
+    <dimen name="btn_save_corner_radius">8dp</dimen>
+
 
 </resources>

@@ -115,7 +115,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_language) {
-
+            startActivity(new Intent(HomeActivity.this, LanguageSelectionActivity.class));
         } else if (id == R.id.nav_store_locator) {
             startActivity(new Intent(HomeActivity.this, StoreLocatorActivity.class));
         }
