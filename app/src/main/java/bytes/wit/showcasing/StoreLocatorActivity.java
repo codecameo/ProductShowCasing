@@ -2,11 +2,16 @@ package bytes.wit.showcasing;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 
@@ -17,6 +22,7 @@ import bytes.wit.interfaces.ILocationProvider;
 import bytes.wit.interfaces.IStoreLocatorCommunicator;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.receivers.StoreLocationReceiver;
+import bytes.wit.utils.PermissionHandler;
 import bytes.wit.wrappers.StoreLocationProviderAdapter;
 
 /**
@@ -25,7 +31,10 @@ import bytes.wit.wrappers.StoreLocationProviderAdapter;
 
 public class StoreLocatorActivity extends BaseActivity implements
         FragmentStoreList.OnListFragmentInteractionListener,
-        StoreLocationReceiver.Receiver {
+        StoreLocationReceiver.Receiver,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+
 
     private StoreLocationReceiver mStoreLocationReceiver;
     private Handler mHandler;
@@ -34,6 +43,8 @@ public class StoreLocatorActivity extends BaseActivity implements
     private ArrayList<StoreLocatorModel> mStoreLocatorModels;
     private FragmentStoreList mFragmentStoreList;
     private ProgressBar mProgressBar;
+    private GoogleApiClient mGoogleApiClient;
+    private PermissionHandler mPermissionHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,11 +73,20 @@ public class StoreLocatorActivity extends BaseActivity implements
 
     private void initVariables() {
         mFragmentStoreList = new FragmentStoreList();
+        mPermissionHandler = new PermissionHandler(this);
         mStoreLocatorModels = new ArrayList<>();
         mProviderFactory = ProviderFactory.getProviderInstance();
         mHandler = new Handler();
         mStoreLocationReceiver = new StoreLocationReceiver(mHandler);
         mILocationProvider = mProviderFactory.getStoreLocationProvider(this, mStoreLocationReceiver);
+
+        //Initializing googleapi client
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
     }
 
     private void addStoreLocatorFragment() {
@@ -111,6 +131,48 @@ public class StoreLocatorActivity extends BaseActivity implements
             ((IStoreLocatorCommunicator) mFragmentStoreList).updateListData(mStoreLocatorModels);
         }
     }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+
+    //Getting current location
+    private void getCurrentLocation() {
+        //Creating a location object
+        /*if (mPermissionHandler.hasCoarseLocationPermission() && mPermissionHandler.hasFineLocationPermission()){
+            Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (location != null) {
+
+            }
+        }*/
+    }
+
+
+
 
     /*private class StoreLocationReceiver extends ResultReceiver {
 

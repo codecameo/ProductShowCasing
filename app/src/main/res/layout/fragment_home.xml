@@ -14,8 +14,7 @@
         <FrameLayout
             android:id="@+id/slider_panel"
             android:layout_width="match_parent"
-            android:layout_height="196dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="196dp" />
 
         <android.support.v7.widget.RecyclerView
             android:nestedScrollingEnabled="false"

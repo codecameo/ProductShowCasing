@@ -1,7 +1,10 @@
 package bytes.wit.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.showcasing.R;
+import bytes.wit.utils.PermissionHandler;
 
 /**
  * Created by Sharifur Rahaman on 1/5/2017.
@@ -35,6 +39,7 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     private ArrayList<StoreLocatorModel> mStoreLocatorModels;
     private LatLng mStoreLocation;
     private CameraPosition mCameraPosition;
+    private PermissionHandler mPermissionHandler;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,6 +64,8 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     }
 
     private void initVariable() {
+
+        mPermissionHandler = new PermissionHandler(getActivity());
 
         Bundle bundle = new Bundle();
         bundle = getArguments();
@@ -129,7 +136,15 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     //UI settings of map
     private void mapUiSetting(boolean flag) {
 
-        //mGoogleMap.setMyLocationEnabled(flag);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            mGoogleMap.setMyLocationEnabled(flag);
+        } else if (!mPermissionHandler.hasFineLocationPermission()) {
+            mPermissionHandler.requestFineLocationPermission();
+        } else if (!mPermissionHandler.hasCoarseLocationPermission()) {
+            mPermissionHandler.requestCoarseLocationPermission();
+        }
+
+
         mGoogleMap.setBuildingsEnabled(flag);
         mUiSettings.setZoomControlsEnabled(flag);
         mUiSettings.setCompassEnabled(flag);
