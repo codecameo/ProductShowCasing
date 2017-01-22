@@ -3,11 +3,13 @@ package bytes.wit.fragments;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +25,10 @@ import java.util.ArrayList;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.showcasing.R;
 import bytes.wit.utils.PermissionHandler;
+
+import static bytes.wit.utils.PermissionHandler.REQUEST_BOTH_LOCATION_PERMISSION;
+import static bytes.wit.utils.PermissionHandler.REQUEST_COARSE_LOCATION;
+import static bytes.wit.utils.PermissionHandler.REQUEST_FINE_LOCATION;
 
 /**
  * Created by Sharifur Rahaman on 1/5/2017.
@@ -136,14 +142,7 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     //UI settings of map
     private void mapUiSetting(boolean flag) {
 
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            mGoogleMap.setMyLocationEnabled(flag);
-        } else if (!mPermissionHandler.hasFineLocationPermission()) {
-            mPermissionHandler.requestFineLocationPermission();
-        } else if (!mPermissionHandler.hasCoarseLocationPermission()) {
-            mPermissionHandler.requestCoarseLocationPermission();
-        }
-
+        enableLocation(flag);
 
         mGoogleMap.setBuildingsEnabled(flag);
         mUiSettings.setZoomControlsEnabled(flag);
@@ -155,5 +154,37 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
         mUiSettings.setRotateGesturesEnabled(flag);
 
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+    }
+
+    private void enableLocation(boolean flag) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mGoogleMap.setMyLocationEnabled(flag);
+        } else if (!mPermissionHandler.hasFineLocationPermission()) {
+            mPermissionHandler.requestFineLocationPermission();
+        } else if (!mPermissionHandler.hasCoarseLocationPermission()) {
+            mPermissionHandler.requestCoarseLocationPermission();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+
+            case REQUEST_BOTH_LOCATION_PERMISSION:
+            case REQUEST_COARSE_LOCATION:
+            case REQUEST_FINE_LOCATION:
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getActivity(), "Location enbaled", Toast.LENGTH_SHORT).show();
+                    enableLocation(true);
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.toast_location_permision_denied), Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+
+
     }
 }

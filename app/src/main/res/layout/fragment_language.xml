@@ -12,10 +12,13 @@
         android:layout_height="?listPreferredItemHeight"
         android:background="@android:color/white"
         android:drawableRight="@drawable/language_circular_button"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center_vertical|left"
         android:paddingLeft="@dimen/tv_language_padding_left"
         android:paddingRight="@dimen/tv_language_padding_left"
-        android:gravity="center_vertical|left"
-        android:text="@string/tv_bangla" />
+        android:text="@string/tv_bangla"
+        android:textColor="@drawable/text_selection_color"
+        android:textSize="@dimen/abc_text_size_subhead_material" />
 
     <View
         android:layout_width="match_parent"
@@ -28,19 +31,24 @@
         android:layout_height="?listPreferredItemHeight"
         android:background="@android:color/white"
         android:drawableRight="@drawable/language_circular_button"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center_vertical|left"
         android:paddingLeft="@dimen/tv_language_padding_left"
         android:paddingRight="@dimen/tv_language_padding_left"
-        android:gravity="center_vertical|left"
-        android:text="@string/tv_english" />
+        android:text="@string/tv_english"
+        android:textColor="@drawable/text_selection_color"
+        android:textSize="@dimen/abc_text_size_subhead_material" />
 
     <Button
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="?listPreferredItemHeightSmall"
-        android:background="@drawable/language_button_save"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:text="@string/button_save" />
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/language_button_save"
+        android:text="@string/button_save"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/abc_text_size_subhead_material" />
 
 </LinearLayout>

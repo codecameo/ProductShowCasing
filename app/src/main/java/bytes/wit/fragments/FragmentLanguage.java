@@ -3,11 +3,14 @@ package bytes.wit.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import bytes.wit.managers.LocalityManger;
 import bytes.wit.showcasing.R;
 
 /**
@@ -19,6 +22,10 @@ public class FragmentLanguage extends Fragment implements View.OnClickListener {
 
     /** TextView bangla and english to hold the language reference. Selecting each change the language for the app*/
     private TextView mTvBangla, mTvEnglish;
+    private LocalityManger mLocalityManger;
+    private String mLocality, mSelectedLocality, mCountry, mSelectedCountry;
+    private Button mBtnSave;
+    private onLanguageChangedListener mOnLanguageChangedListener;
 
     public FragmentLanguage() {
         // Required empty public constructor
@@ -49,12 +56,36 @@ public class FragmentLanguage extends Fragment implements View.OnClickListener {
         initListeners();
     }
 
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        initVariables();
+        setDefaultValue();
+    }
+
+    private void setDefaultValue() {
+        if (TextUtils.equals(mLocality, mLocalityManger.localities[0])) {
+            mTvEnglish.setSelected(true);
+        } else {
+            mTvBangla.setSelected(true);
+        }
+    }
+
+    private void initVariables() {
+        mLocalityManger = LocalityManger.getInstance(getActivity());
+        mLocality = mLocalityManger.getLocality();
+        mCountry = mLocalityManger.getCountry();
+    }
+
     /**
      * Initialize all listeners here.
      */
     private void initListeners() {
         mTvBangla.setOnClickListener(this);
         mTvEnglish.setOnClickListener(this);
+        mBtnSave.setOnClickListener(this);
     }
 
     /**
@@ -64,10 +95,39 @@ public class FragmentLanguage extends Fragment implements View.OnClickListener {
     private void initViews(View view) {
         mTvBangla = (TextView) view.findViewById(R.id.tv_bangla);
         mTvEnglish = (TextView) view.findViewById(R.id.tv_english);
+        mBtnSave = (Button) view.findViewById(R.id.btn_save);
     }
 
     @Override
     public void onClick(View view) {
-        view.setSelected(!view.isSelected());
+        final int id = view.getId();
+
+        if (id == R.id.tv_bangla) {
+            mSelectedLocality = mLocalityManger.localities[1];
+            mSelectedCountry = mLocalityManger.countries[1];
+            updateSelectionView();
+        } else if (id == R.id.tv_english) {
+            mSelectedLocality = mLocalityManger.localities[0];
+            mSelectedCountry = mLocalityManger.countries[0];
+            updateSelectionView();
+        } else if (id == R.id.btn_save) {
+            if (!TextUtils.equals(mLocality, mSelectedLocality)) {
+                mLocalityManger.updateLocality(mSelectedLocality, mSelectedCountry, true);
+                mOnLanguageChangedListener.onLanguageChanged();
+            }
+        }
+    }
+
+    private void updateSelectionView() {
+        mTvBangla.setSelected(!mTvBangla.isSelected());
+        mTvEnglish.setSelected(!mTvEnglish.isSelected());
+    }
+
+    public void setOnLanguageChangedListener(onLanguageChangedListener mOnLanguageChangedListener) {
+        this.mOnLanguageChangedListener = mOnLanguageChangedListener;
+    }
+
+    public interface onLanguageChangedListener {
+        void onLanguageChanged();
     }
 }

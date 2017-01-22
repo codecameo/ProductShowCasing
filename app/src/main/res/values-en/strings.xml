@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Show Casing</string>
     <string name="category_name">Category Name</string>
     <string name="text_more">More</string>
@@ -29,27 +31,11 @@
     <string name="permission_msg_location">Provide location permission</string>
 
     <string name="button_save">Save</string>
-    <string name="tv_bangla">বাংলা</string>
-    <string name="tv_english">English</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_language_selection">Language</string>
     <string name="toast_location_permision_denied">The app was not allowed to find your location. Please consider granting it this permission</string>
 
-    <string-array name="language">
-        <item>English</item>
-        <item>বাংলা</item>
-    </string-array>
-
-    <string-array name="locality">
-        <item>en</item>
-        <item>bn</item>
-    </string-array>
-
-    <string-array name="country">
-        <item>US</item>
-        <item>BD</item>
-    </string-array>
 
 </resources>

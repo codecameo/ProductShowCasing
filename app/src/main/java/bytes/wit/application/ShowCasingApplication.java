@@ -1,8 +1,12 @@
 package bytes.wit.application;
 
 import android.app.Application;
+import android.content.ContextWrapper;
 
 import com.squareup.leakcanary.LeakCanary;
+
+import bytes.wit.managers.LocalityManger;
+import bytes.wit.wrappers.LanguageContextWrapper;
 
 
 /**
@@ -10,6 +14,10 @@ import com.squareup.leakcanary.LeakCanary;
  */
 
 public class ShowCasingApplication extends Application {
+
+    private LocalityManger mLocalityManger;
+    private ContextWrapper mLanguageContextWrapper;
+    private static ShowCasingApplication application;
 
     @Override
     public void onCreate() {
@@ -21,5 +29,20 @@ public class ShowCasingApplication extends Application {
         }
         LeakCanary.install(this);
         // Normal app init code...
+        application = this;
+        mLocalityManger = LocalityManger.getInstance(getBaseContext());
+        updateContextWrapper();
+    }
+
+    public static ShowCasingApplication getInstance() {
+        return application;
+    }
+
+    public ContextWrapper getLanguageContextWrapper() {
+        return mLanguageContextWrapper;
+    }
+
+    public void updateContextWrapper() {
+        mLanguageContextWrapper = LanguageContextWrapper.wrap(getBaseContext(), mLocalityManger.getLocality());
     }
 }

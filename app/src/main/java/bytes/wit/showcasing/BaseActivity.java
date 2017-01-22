@@ -1,6 +1,7 @@
 package bytes.wit.showcasing;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
+
+import bytes.wit.application.ShowCasingApplication;
+import bytes.wit.managers.LocalityManger;
 
 /**
  * Created by Md. Sifat-Ul Haque on 10/5/2016.
@@ -20,10 +24,18 @@ public class BaseActivity extends AppCompatActivity {
     public Toolbar toolbar;
     public ActionBar actionBar;
 
+    private LocalityManger mLocalityManger;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //overridePendingTransition(R.anim.activity_transition_slide_in, R.anim.activity_transition_slide_out);
+
+        initVariable();
+    }
+
+    private void initVariable() {
+
     }
 
     @Override
@@ -36,6 +48,11 @@ public class BaseActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         isPaused = true;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ShowCasingApplication.getInstance().getLanguageContextWrapper());
     }
 
     /**
