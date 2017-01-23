@@ -105,11 +105,11 @@ public class FragmentLanguage extends Fragment implements View.OnClickListener {
         if (id == R.id.tv_bangla) {
             mSelectedLocality = mLocalityManger.localities[1];
             mSelectedCountry = mLocalityManger.countries[1];
-            updateSelectionView();
+            updateSelectionView(true);
         } else if (id == R.id.tv_english) {
             mSelectedLocality = mLocalityManger.localities[0];
             mSelectedCountry = mLocalityManger.countries[0];
-            updateSelectionView();
+            updateSelectionView(false);
         } else if (id == R.id.btn_save) {
             if (!TextUtils.equals(mLocality, mSelectedLocality)) {
                 mLocalityManger.updateLocality(mSelectedLocality, mSelectedCountry, true);
@@ -118,9 +118,9 @@ public class FragmentLanguage extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void updateSelectionView() {
-        mTvBangla.setSelected(!mTvBangla.isSelected());
-        mTvEnglish.setSelected(!mTvEnglish.isSelected());
+    private void updateSelectionView(boolean showBangla) {
+        mTvBangla.setSelected(showBangla);
+        mTvEnglish.setSelected(!showBangla);
     }
 
     public void setOnLanguageChangedListener(onLanguageChangedListener mOnLanguageChangedListener) {

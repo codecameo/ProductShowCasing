@@ -12,14 +12,24 @@
         android:src="@drawable/ic_arrow_back_white" />
 
     <EditText
-        android:textColor="@android:color/white"
         android:id="@+id/et_search_text"
-        android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:textColorHint="@color/hint_color"
+        android:layout_toLeftOf="@+id/iv_clear_field"
         android:layout_toRightOf="@id/iv_search_back"
-        android:hint="@string/text_search" />
+        android:background="@null"
+        android:hint="@string/text_search"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/hint_color" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@id/iv_clear_field"
+        android:layout_width="wrap_content"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/activity_vertical_margin"
+        android:src="@drawable/ic_clear" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_search_list"
