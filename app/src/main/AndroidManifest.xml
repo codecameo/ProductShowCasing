@@ -32,7 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DemoActivity" />
         <activity
             android:name=".StoreLocatorActivity"
             android:label="@string/text_store_location"
@@ -43,12 +42,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
+            android:name=".LanguageSelectionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".LanguageSelectionActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".ProductDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name="bytes.wit.services.ProductProviderService" />
         <service android:name="bytes.wit.services.StoreLocationProviderService" />

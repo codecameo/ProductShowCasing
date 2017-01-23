@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import bytes.wit.adapters.HorizontalProductListAdapter;
 import bytes.wit.models.CategoryModel;
+import bytes.wit.models.ProductModel;
 import bytes.wit.showcasing.R;
 import bytes.wit.snap.GravitySnapHelper;
 
@@ -44,7 +45,8 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
     }
 
     private void initVariables() {
-        mProductListAdapter = new HorizontalProductListAdapter();
+        //mProductListAdapter = new HorizontalProductListAdapter(mOnViewAllProductList,mCategoryModel.getProducts());
+        mProductListAdapter = new HorizontalProductListAdapter(null);
     }
 
     private void initViews(View view) {
@@ -65,9 +67,12 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
 
     public void setOnViewAllProductList(OnViewAllProductList onViewAllProductList) {
         mOnViewAllProductList = onViewAllProductList;
+        mProductListAdapter.setOnViewAllProductList(mOnViewAllProductList);
     }
 
     public interface OnViewAllProductList {
         void onViewAllSelected(CategoryModel categoryModel);
+
+        void onProductSelected(ProductModel productModel);
     }
 }

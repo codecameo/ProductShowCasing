@@ -19,7 +19,9 @@ import bytes.wit.adapters.HomeCategorizedListAdapter;
 import bytes.wit.factories.ProviderFactory;
 import bytes.wit.interfaces.IProductProvider;
 import bytes.wit.models.CategoryModel;
+import bytes.wit.models.ProductModel;
 import bytes.wit.receivers.ProductResultReceiver;
+import bytes.wit.showcasing.ProductDetailActivity;
 import bytes.wit.showcasing.R;
 import bytes.wit.showcasing.ShowProductListActivity;
 import bytes.wit.utils.Constant;
@@ -33,7 +35,8 @@ import static bytes.wit.showcasing.ShowProductListActivity.KEY_PRODUCT_LIST;
  * Created by Md. Sifat-Ul Haque on 12/28/2016.
  */
 
-public class FragmentHome extends Fragment implements ProductResultReceiver.Receiver, CategoryViewHolder.OnViewAllProductList {
+public class FragmentHome extends Fragment implements ProductResultReceiver.Receiver,
+        CategoryViewHolder.OnViewAllProductList {
 
     private ArrayList<String> mImagesUrl;
     private SliderFragment mSliderFragment;
@@ -116,11 +119,19 @@ public class FragmentHome extends Fragment implements ProductResultReceiver.Rece
 
     @Override
     public void onViewAllSelected(CategoryModel categoryModel) {
-
         Intent intent = new Intent(getActivity(), ShowProductListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY_PRODUCT_LIST, categoryModel);
         intent.putExtras(bundle);
         getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void onProductSelected(ProductModel productModel) {
+
+        /***
+         * To Do provide necessary info to show corresponding product detail
+         * */
+        getActivity().startActivity(new Intent(getActivity(), ProductDetailActivity.class));
     }
 }
