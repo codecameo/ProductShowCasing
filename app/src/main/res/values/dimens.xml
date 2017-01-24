@@ -24,5 +24,9 @@
     <dimen name="tv_language_padding_left">24dp</dimen>
     <dimen name="btn_save_corner_radius">8dp</dimen>
 
+    <dimen name="category_text_horizontal_padding">10dp</dimen>
+    <dimen name="category_text_vertical_padding">6dp</dimen>
+
+    <dimen name="detail_top_section_margin">8dp</dimen>
 
 </resources>

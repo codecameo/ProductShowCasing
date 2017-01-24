@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <FrameLayout
@@ -9,5 +10,65 @@
         android:layout_width="match_parent"
         android:layout_height="196dp" />
 
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/default_card_radius"
+        android:elevation="@dimen/default_card_elevation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/detail_top_section_margin"
+            android:paddingBottom="@dimen/detail_top_section_margin">
+
+            <TextView
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_background"
+                android:paddingBottom="@dimen/category_text_vertical_padding"
+                android:paddingLeft="@dimen/category_text_horizontal_padding"
+                android:paddingRight="@dimen/category_text_horizontal_padding"
+                android:paddingTop="@dimen/category_text_vertical_padding"
+                android:text="Category"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/abc_text_size_small_material" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:textColor="@color/product_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/product_item_margin"
+                android:layout_marginBottom="@dimen/product_item_margin"
+                android:text="Product"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/product_item_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/description" />
+
+            <android.support.v7.widget.RecyclerView
+                android:paddingLeft="@dimen/activity_vertical_margin"
+                android:paddingRight="@dimen/activity_vertical_margin"
+                android:clipToPadding="false"
+                android:id="@+id/rv_package_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

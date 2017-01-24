@@ -37,6 +37,7 @@
     <string name="title_activity_language_selection">Language</string>
     <string name="toast_location_permision_denied">The app was not allowed to find your location. Please consider granting it this permission</string>
     <string name="title_activity_product_detail">Product Detail</string>
+    <string name="description">With a layer of austere vanilla cream sandwiched between two finely baked...</string>
 
     <string-array name="language">
         <item>English</item>

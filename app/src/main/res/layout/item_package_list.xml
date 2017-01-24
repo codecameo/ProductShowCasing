@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangular_background"
+    android:text="Package"
+    android:layout_marginRight="@dimen/list_item_margin"
+    android:paddingBottom="@dimen/category_text_vertical_padding"
+    android:paddingLeft="@dimen/category_text_horizontal_padding"
+    android:paddingRight="@dimen/category_text_horizontal_padding"
+    android:paddingTop="@dimen/category_text_vertical_padding"
+    android:textColor="@android:color/white" />

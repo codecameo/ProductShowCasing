@@ -4,13 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import bytes.wit.adapters.PackageListAdapter;
 import bytes.wit.showcasing.R;
+import bytes.wit.snap.GravitySnapHelper;
 import cameo.code.imageslider.SliderFragment;
 
 /**
@@ -21,6 +26,7 @@ public class FragmentProductDetail extends Fragment {
 
     private ArrayList<String> mImagesUrl;
     private SliderFragment mSliderFragment;
+    private RecyclerView mRvPackageList;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -34,6 +40,13 @@ public class FragmentProductDetail extends Fragment {
         initVariables();
         setDefaultValues();
         showSlider();
+        setupPackageList();
+    }
+
+    private void setupPackageList() {
+        mRvPackageList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mRvPackageList.setAdapter(new PackageListAdapter());
+        new GravitySnapHelper(Gravity.START).attachToRecyclerView(mRvPackageList);
     }
 
     @Nullable
@@ -45,7 +58,7 @@ public class FragmentProductDetail extends Fragment {
     }
 
     private void initViews(View view) {
-
+        mRvPackageList = (RecyclerView) view.findViewById(R.id.rv_package_list);
     }
 
     private void showSlider() {

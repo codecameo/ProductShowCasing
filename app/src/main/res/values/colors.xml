@@ -34,5 +34,6 @@
     <color name="hint_color">#8Cffffff</color>
 
     <color name="overlay">#73000000</color>
+    <color name="product_title">#3a3a3a</color>
 
 </resources>
