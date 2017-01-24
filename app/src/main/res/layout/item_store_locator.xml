@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/text_margin"
-    android:padding="@dimen/location_item_padding">
+    android:background="?selectableItemBackground"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="12dp"
+    android:paddingTop="@dimen/location_item_padding">
 
     <TextView
         android:id="@+id/tv_address"
@@ -14,71 +18,52 @@
         android:textSize="@dimen/abc_text_size_title_material" />
 
     <TextView
-        android:id="@+id/tv_district"
+        android:id="@+id/tv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_address"
-        android:layout_marginBottom="@dimen/location_item_padding"
-        android:text="mobile"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:textSize="@dimen/abc_text_size_body_1_material" />
-
-    <ImageView
-        android:id="@+id/iv_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv_mobile"
-        android:layout_alignTop="@id/tv_mobile"
-        android:layout_below="@id/tv_district"
-        android:src="@drawable/ic_phone" />
-
-    <TextView
-        android:id="@id/tv_mobile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_district"
-        android:layout_marginBottom="@dimen/location_item_padding"
-        android:layout_marginLeft="@dimen/location_item_padding"
-        android:layout_marginTop="@dimen/location_item_padding"
-        android:layout_toRightOf="@id/iv_phone"
-        android:background="@drawable/rectangular_background"
-        android:gravity="center"
-        android:padding="@dimen/location_item_padding"
-        android:text="01682425474"
-        android:textColor="@android:color/white"
+        android:text="Phone +8801535704918"
         android:textSize="@dimen/abc_text_size_caption_material" />
 
 
-    <ImageView
-        android:id="@+id/iv_distance"
+    <TextView
+        android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv_mobile"
-        android:layout_alignTop="@id/tv_mobile"
-        android:layout_below="@id/tv_district"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/location_item_padding"
+        android:layout_below="@id/tv_phone"
+        android:textSize="@dimen/abc_text_size_caption_material"
+        tools:text="Email sharif.iit.du@gmail.com" />
+
+    <ImageView
+        android:id="@+id/iv_near_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:src="@drawable/ic_near_me" />
 
     <TextView
+        android:id="@+id/tv_show_room"
+        android:layout_below="@id/tv_email"
+        android:layout_width="@dimen/tv_show_room_width"
+        android:layout_height="@dimen/tv_show_room_height"
+        android:layout_marginTop="@dimen/tv_show_room_margin_top"
+        android:background="@drawable/tv_show_room_background"
+        android:text="@string/btn_show_room"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textSize="@dimen/abc_text_size_menu_material"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_district"
-        android:layout_marginBottom="@dimen/location_item_padding"
-        android:layout_marginLeft="@dimen/location_item_padding"
-        android:layout_marginTop="@dimen/location_item_padding"
-        android:layout_toRightOf="@id/iv_distance"
-        android:background="@drawable/rectangular_background"
-        android:gravity="center"
-        android:padding="@dimen/location_item_padding"
-        android:text="17 KM"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/abc_text_size_caption_material" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/tv_mobile"
-        android:background="#dadada" />
+        android:layout_marginRight="12dp"
+        android:text="3.6\nkm"
+        android:layout_below="@+id/iv_near_me"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp" />
 
 </RelativeLayout>
