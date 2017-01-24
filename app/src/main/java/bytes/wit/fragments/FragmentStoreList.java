@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -54,7 +56,11 @@ public class FragmentStoreList extends Fragment implements IStoreLocatorCommunic
     }
 
     private void setupAdapter() {
-        mRvStoreList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRvStoreList.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
+                linearLayoutManager.getOrientation());
+        mRvStoreList.addItemDecoration(dividerItemDecoration);
         mRvStoreList.setAdapter(mStoreLocatorAdapter);
     }
 
