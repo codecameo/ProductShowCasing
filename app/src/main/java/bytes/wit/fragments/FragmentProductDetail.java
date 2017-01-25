@@ -25,8 +25,6 @@ import cameo.code.imageslider.SliderFragment;
 
 public class FragmentProductDetail extends Fragment {
 
-    private ArrayList<String> mImagesUrl;
-    private SliderFragment mSliderFragment;
     private RecyclerView mRvPackageList, mRvPackageImageList;
     private PackageListAdapter mPackageListAdapter;
     private PackageImageListAdapter mPackageImageListAdapter;
@@ -41,8 +39,6 @@ public class FragmentProductDetail extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initVariables();
-        setDefaultValues();
-        showSlider();
         setupPackageList();
         setupPackageImageList();
     }
@@ -72,22 +68,7 @@ public class FragmentProductDetail extends Fragment {
         mRvPackageImageList = (RecyclerView) view.findViewById(R.id.rv_package_image_list);
     }
 
-    private void showSlider() {
-        final FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.product_slider_panel, mSliderFragment);
-        transaction.commit();
-    }
-
-    private void setDefaultValues() {
-        mImagesUrl.add("http://www.dancake.com.bd/images/home-slider/1479303628_th_1.jpg");
-        mImagesUrl.add("http://www.dancake.com.bd/images/home-slider/1479303820_th_2.jpg");
-        mImagesUrl.add("http://www.dancake.com.bd/images/home-slider/1479303916_th_3.jpg");
-    }
-
-
     private void initVariables() {
-        mImagesUrl = new ArrayList<>();
-        mSliderFragment = SliderFragment.createWithPath(mImagesUrl);
         mPackageImageListAdapter = new PackageImageListAdapter();
         mPackageListAdapter = new PackageListAdapter();
     }

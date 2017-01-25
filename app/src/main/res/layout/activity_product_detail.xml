@@ -19,8 +19,16 @@ tools:context=".ProductDetailActivity">
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        app:titleEnabled="false"
         app:contentScrim="?attr/colorPrimary"
         app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+        <FrameLayout
+            android:id="@+id/slider_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout_collapseMode="parallax"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_product_detail"
