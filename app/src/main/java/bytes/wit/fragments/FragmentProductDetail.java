@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import bytes.wit.adapters.PackageImageListAdapter;
 import bytes.wit.adapters.PackageListAdapter;
 import bytes.wit.showcasing.R;
 import bytes.wit.snap.GravitySnapHelper;
@@ -26,7 +27,9 @@ public class FragmentProductDetail extends Fragment {
 
     private ArrayList<String> mImagesUrl;
     private SliderFragment mSliderFragment;
-    private RecyclerView mRvPackageList;
+    private RecyclerView mRvPackageList, mRvPackageImageList;
+    private PackageListAdapter mPackageListAdapter;
+    private PackageImageListAdapter mPackageImageListAdapter;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -41,11 +44,18 @@ public class FragmentProductDetail extends Fragment {
         setDefaultValues();
         showSlider();
         setupPackageList();
+        setupPackageImageList();
+    }
+
+    private void setupPackageImageList() {
+        mRvPackageImageList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mRvPackageImageList.setAdapter(mPackageImageListAdapter);
+        new GravitySnapHelper(Gravity.START).attachToRecyclerView(mRvPackageImageList);
     }
 
     private void setupPackageList() {
         mRvPackageList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        mRvPackageList.setAdapter(new PackageListAdapter());
+        mRvPackageList.setAdapter(mPackageListAdapter);
         new GravitySnapHelper(Gravity.START).attachToRecyclerView(mRvPackageList);
     }
 
@@ -59,6 +69,7 @@ public class FragmentProductDetail extends Fragment {
 
     private void initViews(View view) {
         mRvPackageList = (RecyclerView) view.findViewById(R.id.rv_package_list);
+        mRvPackageImageList = (RecyclerView) view.findViewById(R.id.rv_package_image_list);
     }
 
     private void showSlider() {
@@ -77,5 +88,7 @@ public class FragmentProductDetail extends Fragment {
     private void initVariables() {
         mImagesUrl = new ArrayList<>();
         mSliderFragment = SliderFragment.createWithPath(mImagesUrl);
+        mPackageImageListAdapter = new PackageImageListAdapter();
+        mPackageListAdapter = new PackageListAdapter();
     }
 }

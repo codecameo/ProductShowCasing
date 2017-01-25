@@ -1,74 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:scrollbars="none">
 
-    <FrameLayout
-        android:id="@+id/product_slider_panel"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="196dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/default_card_radius"
-        android:elevation="@dimen/default_card_elevation">
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/product_slider_panel"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/detail_top_section_margin"
-            android:paddingBottom="@dimen/detail_top_section_margin">
+            android:layout_height="196dp" />
 
-            <TextView
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rectangular_background"
-                android:paddingBottom="@dimen/category_text_vertical_padding"
-                android:paddingLeft="@dimen/category_text_horizontal_padding"
-                android:paddingRight="@dimen/category_text_horizontal_padding"
-                android:paddingTop="@dimen/category_text_vertical_padding"
-                android:text="Category"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/abc_text_size_small_material" />
 
-            <TextView
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
-                android:textColor="@color/product_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/product_item_margin"
-                android:layout_marginBottom="@dimen/product_item_margin"
-                android:text="Product"
-                android:textSize="@dimen/abc_text_size_large_material"
-                android:fontFamily="sans-serif-medium" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_top_section_margin"
+            android:elevation="@dimen/default_card_elevation"
+            app:cardCornerRadius="@dimen/small_card_radius">
 
-            <TextView
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
-                android:layout_marginBottom="@dimen/product_item_margin"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/description" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/detail_top_section_margin"
+                android:paddingTop="@dimen/detail_top_section_margin">
 
-            <android.support.v7.widget.RecyclerView
-                android:paddingLeft="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_vertical_margin"
-                android:clipToPadding="false"
-                android:id="@+id/rv_package_list"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/detail_top_section_margin"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:background="@drawable/rectangular_background"
+                    android:paddingBottom="@dimen/category_text_vertical_padding"
+                    android:paddingLeft="@dimen/category_text_horizontal_padding"
+                    android:paddingRight="@dimen/category_text_horizontal_padding"
+                    android:paddingTop="@dimen/category_text_vertical_padding"
+                    android:text="Category"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/abc_text_size_small_material" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/detail_top_section_margin"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Product"
+                    android:textColor="@color/product_title"
+                    android:textSize="@dimen/abc_text_size_large_material" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/detail_top_section_margin"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:text="@string/description" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_package_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/detail_top_section_margin"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_vertical_margin" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/detail_top_section_margin"
+                    android:elevation="@dimen/default_card_elevation"
+                    app:cardCornerRadius="@dimen/default_card_radius">
+        -->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_package_image_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/detail_top_section_margin"
+            android:paddingLeft="@dimen/package_image_list_horizontal_padding" />
+        <!--
+                </android.support.v7.widget.CardView>
+        -->
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_top_section_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:elevation="@dimen/default_card_elevation"
+            app:cardCornerRadius="@dimen/small_card_radius">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/detail_top_section_margin"
+                android:paddingTop="@dimen/detail_top_section_margin">
 
-        </LinearLayout>
+                <TextView
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/detail_top_section_margin"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:text="@string/text_specification"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryDark" />
 
-    </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

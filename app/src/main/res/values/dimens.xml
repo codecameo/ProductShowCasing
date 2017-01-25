@@ -19,6 +19,7 @@
 
     <dimen name="default_card_elevation">4dp</dimen>
     <dimen name="default_card_radius">8dp</dimen>
+    <dimen name="small_card_radius">4dp</dimen>
     <dimen name="list_item_bottom_margin">10dp</dimen>
 
     <dimen name="tv_language_padding_left">24dp</dimen>
@@ -33,6 +34,7 @@
     <dimen name="tv_show_room_margin_top">12dp</dimen>
     <dimen name="tv_show_room_corner">16dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="package_image_list_horizontal_padding">6dp</dimen>
 
 
 </resources>
