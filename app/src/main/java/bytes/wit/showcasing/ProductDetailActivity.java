@@ -4,16 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import bytes.wit.adapters.PackageImageListAdapter;
 import cameo.code.imageslider.SliderFragment;
 
 /**
  * Created by Md. Sifat-Ul Haque on 1/23/2017.
  */
 
-public class ProductDetailActivity extends BaseActivity {
+public class ProductDetailActivity extends BaseActivity implements PackageImageListAdapter.OnPackageImageSelectedListener {
     /**
      * The image urls for slider images. This is set slider image and it may change in future.
      */
@@ -54,5 +56,10 @@ public class ProductDetailActivity extends BaseActivity {
             onBackPressed();
         }
         return true;
+    }
+
+    @Override
+    public void onPackageImageSelected() {
+        Toast.makeText(this, "Selected", Toast.LENGTH_SHORT).show();
     }
 }

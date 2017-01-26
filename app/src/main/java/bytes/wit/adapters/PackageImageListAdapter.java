@@ -12,6 +12,13 @@ import bytes.wit.showcasing.R;
  */
 
 public class PackageImageListAdapter extends RecyclerView.Adapter<PackageImageListAdapter.PackageImageViewHolder> {
+
+    private OnPackageImageSelectedListener mOnPackageImageSelectedListener;
+
+    public PackageImageListAdapter(OnPackageImageSelectedListener onPackageImageSelectedListener) {
+        mOnPackageImageSelectedListener = onPackageImageSelectedListener;
+    }
+
     @Override
     public PackageImageListAdapter.PackageImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new PackageImageViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_package_image, parent, false));
@@ -27,10 +34,22 @@ public class PackageImageListAdapter extends RecyclerView.Adapter<PackageImageLi
         return 5;
     }
 
-    public class PackageImageViewHolder extends RecyclerView.ViewHolder {
+    public class PackageImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public PackageImageViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mOnPackageImageSelectedListener.onPackageImageSelected();
         }
     }
+
+
+    public interface OnPackageImageSelectedListener {
+        void onPackageImageSelected();
+    }
+
 }
