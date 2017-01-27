@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,11 +68,11 @@ public class StoreLocationProviderService extends IntentService {
         });
     }
 
-    private void sendAllStoreData(ArrayList<StoreLocatorModel> storeLocatorModels) {
+    private void sendAllStoreData(List<StoreLocatorModel> storeLocatorModels) {
         if (resultReceiver.get() != null) {
             Bundle bundle = new Bundle();
             bundle.putInt(ACTION, action);
-            bundle.putSerializable(StoreLocationProviderAdapter.KEY_SHOWROOM_INFO, storeLocatorModels);
+            bundle.putSerializable(StoreLocationProviderAdapter.KEY_SHOWROOM_INFO, (Serializable) storeLocatorModels);
             resultReceiver.get().send(Constant.API_RESPONSE_SUCCESSFUL, bundle);
         }
         resultReceiver = null;

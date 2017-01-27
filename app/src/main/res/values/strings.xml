@@ -40,6 +40,7 @@
     <string name="title_activity_product_detail">Product Detail</string>
     <string name="description">With a layer of austere vanilla cream sandwiched between two finely baked chocolate cakes, we serve you our prêt-à-porter Chocolate Layer Cake.</string>
     <string name="text_specification">Spacification</string>
+    <string name="text_related_product_title">Product related to this item</string>
 
     <string-array name="language">
         <item>English</item>

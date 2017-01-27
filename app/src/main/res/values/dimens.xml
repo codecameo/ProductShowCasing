@@ -33,9 +33,12 @@
     <dimen name="tv_show_room_height">32dp</dimen>
     <dimen name="tv_show_room_margin_top">12dp</dimen>
     <dimen name="tv_show_room_corner">16dp</dimen>
-    <dimen name="app_bar_height">280dp</dimen>
+    <dimen name="app_bar_height">256dp</dimen>
     <dimen name="detail_top_section_padding_top">24dp</dimen>
     <dimen name="package_image_list_horizontal_padding">6dp</dimen>
 
+
+    <dimen name="specification_title_margin">4dp</dimen>
+    <dimen name="slider_height">196dp</dimen>
 
 </resources>
