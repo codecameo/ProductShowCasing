@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_full_screen_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="bytes.wit.view.activity.FullScreenContentActivity">
+
+    <!-- activity_screen_slide.xml -->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_full_screen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_full_screen_content"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/transparent" />
+
+</FrameLayout>
