@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,4 +11,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</LinearLayout>
+    <RelativeLayout
+        android:elevation="@dimen/default_card_elevation"
+        android:clipToPadding="false"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/list_item_margin"
+        android:paddingTop="@dimen/location_item_padding">
+
+        <TextView
+            android:id="@+id/tv_map_address"
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/iv_map_near_me"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="Address"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="@dimen/abc_text_size_title_material"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tv_map_district"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_map_address"
+            android:textSize="@dimen/abc_text_size_caption_material"
+            android:text="Dhaka" />
+
+        <TextView
+            android:id="@+id/tv_map_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_map_district"
+            android:text="Phone +8801535704918"
+            android:textSize="@dimen/abc_text_size_caption_material" />
+
+        <TextView
+            android:id="@+id/tv_map_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_map_phone"
+            android:textSize="@dimen/abc_text_size_caption_material"
+            android:text="Email sharif.iit.du@gmail.com" />
+
+        <ImageView
+            android:id="@id/iv_map_near_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/ic_near_me" />
+
+        <TextView
+            android:visibility="gone"
+            android:text="3.5\nkm"
+            android:id="@+id/tv_map_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/iv_map_near_me"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="12dp" />
+
+    </RelativeLayout>
+</RelativeLayout>

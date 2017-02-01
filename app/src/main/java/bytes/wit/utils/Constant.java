@@ -16,4 +16,6 @@ public class Constant {
 
     public static final String DISTANCE_UNIT_KILOMETER = "km";
     public static final String DISTANCE_UNIT_METER = "m";
+    public static final String PHONE_TAG = "Phone: ";
+    public static final String EMAIL_TAG = "Email: ";
 }
