@@ -23,6 +23,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
     private TextView mTvCategoryTitle, mTvViewAll;
     private CategoryModel mCategoryModel;
     private OnViewAllProductList mOnViewAllProductList;
+    private OnProductSelectedListener mOnProductSelectedListener;
 
     public CategoryViewHolder(View itemView) {
         super(itemView);
@@ -67,12 +68,18 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
 
     public void setOnViewAllProductList(OnViewAllProductList onViewAllProductList) {
         mOnViewAllProductList = onViewAllProductList;
-        mProductListAdapter.setOnViewAllProductList(mOnViewAllProductList);
+    }
+
+    public void setOnProductSelectedListener(OnProductSelectedListener onProductSelectedListener) {
+        this.mOnProductSelectedListener = onProductSelectedListener;
+        mProductListAdapter.setOnProductSelectedListener(mOnProductSelectedListener);
     }
 
     public interface OnViewAllProductList {
         void onViewAllSelected(CategoryModel categoryModel);
+    }
 
+    public interface OnProductSelectedListener {
         void onProductSelected(ProductModel productModel);
     }
 }

@@ -79,7 +79,6 @@ public class StoreLocatorAdapter extends RecyclerView.Adapter<StoreLocatorAdapte
             mTvAddress.setText(storeLocatorModel.getStore_address());
             mTvEmail.setText("Email: sharif.iit.du@gmail.com");
             mTvPhone.setText("Phone: "+storeLocatorModel.getMobile_number());
-
             tvDistance.setText(getFormattedDistance(storeLocatorModel.getDistance(), storeLocatorModel.getDistance_unit()));
         }
 
@@ -101,5 +100,4 @@ public class StoreLocatorAdapter extends RecyclerView.Adapter<StoreLocatorAdapte
         spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), index, distance.length(), 0);
         return spannableString;
     }
-
 }

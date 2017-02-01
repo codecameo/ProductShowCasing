@@ -17,7 +17,6 @@ import bytes.wit.adapters.HorizontalProductListAdapter;
 import bytes.wit.adapters.PackageImageListAdapter;
 import bytes.wit.adapters.PackageListAdapter;
 import bytes.wit.adapters.SpecificationAdapter;
-import bytes.wit.models.CategoryModel;
 import bytes.wit.models.ProductModel;
 import bytes.wit.showcasing.ProductDetailActivity;
 import bytes.wit.showcasing.R;
@@ -28,7 +27,7 @@ import bytes.wit.viewholder.CategoryViewHolder;
  * Created by Md. Sifat-Ul Haque on 1/23/2017.
  */
 
-public class FragmentProductDetail extends Fragment implements CategoryViewHolder.OnViewAllProductList {
+public class FragmentProductDetail extends Fragment implements CategoryViewHolder.OnProductSelectedListener {
 
     private RecyclerView mRvPackageList, mRvPackageImageList, mRvSpecificationList, mRvSuggestedList;
     private PackageListAdapter mPackageListAdapter;
@@ -39,7 +38,6 @@ public class FragmentProductDetail extends Fragment implements CategoryViewHolde
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Override
@@ -54,7 +52,7 @@ public class FragmentProductDetail extends Fragment implements CategoryViewHolde
     }
 
     private void initListeners() {
-        mSuggestedProductListAdapter.setOnViewAllProductList(this);
+        mSuggestedProductListAdapter.setOnProductSelectedListener(this);
     }
 
     private void setupSuggestedProductList() {
@@ -103,10 +101,6 @@ public class FragmentProductDetail extends Fragment implements CategoryViewHolde
         mSuggestedProductListAdapter = new HorizontalProductListAdapter(new ArrayList<ProductModel>());
     }
 
-    @Override
-    public void onViewAllSelected(CategoryModel categoryModel) {
-
-    }
 
     @Override
     public void onProductSelected(ProductModel productModel) {
