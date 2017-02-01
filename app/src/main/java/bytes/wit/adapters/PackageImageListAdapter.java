@@ -43,13 +43,13 @@ public class PackageImageListAdapter extends RecyclerView.Adapter<PackageImageLi
 
         @Override
         public void onClick(View view) {
-            mOnPackageImageSelectedListener.onPackageImageSelected();
+            mOnPackageImageSelectedListener.onPackageImageSelected(getAdapterPosition());
         }
     }
 
 
     public interface OnPackageImageSelectedListener {
-        void onPackageImageSelected();
+        void onPackageImageSelected(int position);
     }
 
 }

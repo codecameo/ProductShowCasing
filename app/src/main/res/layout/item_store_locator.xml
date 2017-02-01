@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="12dp"
-        android:text="3.6\nkm"
+        android:gravity="center_horizontal"
         android:layout_below="@+id/iv_near_me"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

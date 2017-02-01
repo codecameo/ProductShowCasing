@@ -12,4 +12,8 @@ public class Constant {
 
     public static final String DEFAULT_LOCALITY = "en";
     public static final String DEFAULT_COUNTRY = "US";
+
+
+    public static final String DISTANCE_UNIT_KILOMETER = "km";
+    public static final String DISTANCE_UNIT_METER = "m";
 }

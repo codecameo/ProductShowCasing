@@ -8,7 +8,6 @@ import android.os.ResultReceiver;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import bytes.wit.apiconfig.ApiClient;
@@ -63,13 +62,13 @@ public class StoreLocationProviderService extends IntentService {
 
             @Override
             public void onFailure(Call<ArrayList<StoreLocatorModel>> call, Throwable t) {
-                sendAllStoreData((ArrayList<StoreLocatorModel>) Collections.EMPTY_LIST);
+                sendAllStoreData(null);
             }
         });
     }
 
     private void sendAllStoreData(List<StoreLocatorModel> storeLocatorModels) {
-        if (resultReceiver.get() != null) {
+        if (resultReceiver.get() != null && storeLocatorModels != null) {
             Bundle bundle = new Bundle();
             bundle.putInt(ACTION, action);
             bundle.putSerializable(StoreLocationProviderAdapter.KEY_SHOWROOM_INFO, (Serializable) storeLocatorModels);

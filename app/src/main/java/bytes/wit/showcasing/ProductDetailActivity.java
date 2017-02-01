@@ -59,7 +59,7 @@ public class ProductDetailActivity extends BaseActivity implements PackageImageL
     }
 
     @Override
-    public void onPackageImageSelected() {
-        Toast.makeText(this, "Selected", Toast.LENGTH_SHORT).show();
+    public void onPackageImageSelected(int position) {
+        Toast.makeText(this, "Selected Position: " + position, Toast.LENGTH_SHORT).show();
     }
 }

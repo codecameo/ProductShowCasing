@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+import bytes.wit.interfaces.OnLocationFetchedListener;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.showcasing.R;
+import bytes.wit.showcasing.StoreLocatorActivity;
 import bytes.wit.utils.PermissionHandler;
 
 import static bytes.wit.utils.PermissionHandler.REQUEST_BOTH_LOCATION_PERMISSION;
@@ -35,7 +38,7 @@ import static bytes.wit.utils.PermissionHandler.REQUEST_FINE_LOCATION;
  * Email: sharif.iit.du@gmail.com
  */
 
-public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment implements OnMapReadyCallback {
+public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment implements OnMapReadyCallback, OnLocationFetchedListener {
 
     private static final String KEY_STORE_LOCATION = "key_store_location";
     private static final String KEY_SELECTED_STORE_POSITION = "key_store_selection_position";
@@ -66,7 +69,14 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initListeners();
         initVariable();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("Frag", "Resume 2");
     }
 
     private void initVariable() {
@@ -82,6 +92,10 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
             mStoreLocation = new LatLng(mStoreLocatorModels.get(mSelectedPosition).getLatitude(), mStoreLocatorModels.get(mSelectedPosition).getLongitude());
             //Toast.makeText(getContext(),"Lat "+ mStoreLocatorModels.getLatitude(),Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void initListeners() {
+        ((StoreLocatorActivity) getActivity()).addLocationFetchedListener(this);
     }
 
     @Override
@@ -186,5 +200,16 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
         }
 
 
+    }
+
+    @Override
+    public void onLocationFetched(LatLng latLng) {
+        Log.d("Frag_Location", "Lat " + latLng.latitude + " Long " + latLng.longitude);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((StoreLocatorActivity) getActivity()).removeLocationFetchedListener(this);
     }
 }

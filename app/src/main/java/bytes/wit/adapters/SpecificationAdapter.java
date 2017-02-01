@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -56,17 +57,32 @@ public class SpecificationAdapter extends RecyclerView.Adapter<SpecificationAdap
 
     @Override
     public void onBindViewHolder(SpecificationAdapter.SpecificationViewHolder holder, int position) {
-
+        holder.bindTo(mSpecifications.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return mSpecifications.size();
     }
 
     public class SpecificationViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView mTvTitle, mTvDescription;
+
         public SpecificationViewHolder(View itemView) {
             super(itemView);
+            initViews();
+
+        }
+
+        private void initViews() {
+            mTvDescription = (TextView) itemView.findViewById(R.id.tv_specification_description);
+            mTvTitle = (TextView) itemView.findViewById(R.id.tv_specification_title);
+        }
+
+        public void bindTo(ProductSpecificationModel productSpecificationModel) {
+            mTvTitle.setText(productSpecificationModel.getTitle());
+            mTvDescription.setText(productSpecificationModel.getDescription());
         }
     }
 }

@@ -1,9 +1,12 @@
 package bytes.wit.showcasing;
 
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.ProgressBar;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -20,6 +24,7 @@ import bytes.wit.fragments.FragmentStoreList;
 import bytes.wit.fragments.FragmentStoreLocatorMap;
 import bytes.wit.interfaces.ILocationProvider;
 import bytes.wit.interfaces.IStoreLocatorCommunicator;
+import bytes.wit.interfaces.OnLocationFetchedListener;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.receivers.StoreLocationReceiver;
 import bytes.wit.utils.PermissionHandler;
@@ -42,9 +47,28 @@ public class StoreLocatorActivity extends BaseActivity implements
     private ILocationProvider mILocationProvider;
     private ArrayList<StoreLocatorModel> mStoreLocatorModels;
     private FragmentStoreList mFragmentStoreList;
+    private FragmentStoreLocatorMap mFragmentStoreLocator;
     private ProgressBar mProgressBar;
     private GoogleApiClient mGoogleApiClient;
     private PermissionHandler mPermissionHandler;
+    private LatLng mMyLastLocation;
+    private boolean isPreviouslyLoaded = false;
+    private ArrayList<OnLocationFetchedListener> mOnLocationFetchedListeners = new ArrayList<>();
+
+    private Runnable mLastLocation = new Runnable() {
+        @Override
+        public void run() {
+            if (ActivityCompat.checkSelfPermission(StoreLocatorActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(StoreLocatorActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (mGoogleApiClient.isConnected()) {
+                    Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                    if (lastLocation != null) {
+                        mMyLastLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                        broadCastLocation();
+                    }
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,8 +140,9 @@ public class StoreLocatorActivity extends BaseActivity implements
     private void showStoreMap(int position) {
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        mFragmentStoreLocator = FragmentStoreLocatorMap.newInstance(mStoreLocatorModels, position);
         // Replace the contents of the container with the new fragment
-        ft.replace(R.id.store_locator_content, FragmentStoreLocatorMap.newInstance(mStoreLocatorModels, position));
+        ft.replace(R.id.store_locator_content, mFragmentStoreLocator);
         // Complete the changes added above
         ft.addToBackStack(null);
         ft.commit();
@@ -134,7 +159,10 @@ public class StoreLocatorActivity extends BaseActivity implements
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        if (!isPreviouslyLoaded) {
+            isPreviouslyLoaded = true;
+            mHandler.post(mLastLocation);
+        }
     }
 
     @Override
@@ -144,18 +172,18 @@ public class StoreLocatorActivity extends BaseActivity implements
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        connectGoogleApiClient();
     }
 
     @Override
     protected void onStart() {
-        mGoogleApiClient.connect();
+        connectGoogleApiClient();
         super.onStart();
     }
 
     @Override
     protected void onStop() {
-        mGoogleApiClient.disconnect();
+        disconnectGoogleApiClient();
         super.onStop();
     }
 
@@ -190,4 +218,30 @@ public class StoreLocatorActivity extends BaseActivity implements
             }
         }
     }*/
+
+    private void connectGoogleApiClient() {
+        if (!mGoogleApiClient.isConnected() && !mGoogleApiClient.isConnecting()) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    private void disconnectGoogleApiClient() {
+        if (mGoogleApiClient.isConnected() || mGoogleApiClient.isConnecting()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    private void broadCastLocation() {
+        for (int i = 0; i < mOnLocationFetchedListeners.size(); i++) {
+            mOnLocationFetchedListeners.get(i).onLocationFetched(mMyLastLocation);
+        }
+    }
+
+    public void addLocationFetchedListener(OnLocationFetchedListener onLocationFetchedListener) {
+        mOnLocationFetchedListeners.add(onLocationFetchedListener);
+    }
+
+    public void removeLocationFetchedListener(OnLocationFetchedListener onLocationFetchedListener) {
+        mOnLocationFetchedListeners.remove(onLocationFetchedListener);
+    }
 }
