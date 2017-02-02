@@ -48,8 +48,8 @@ public class FullScreenContentActivity extends BaseActivity {
         mPagerAdapter.addImage(IMAGE_URL);
         mPagerAdapter.addVideo(VideoURL);
         mPagerAdapter.addImage(IMAGE_URL);
-        mPager.setCurrentItem(currentPage);
-        mPager.addOnPageChangeListener(this);
+        //mPager.setCurrentItem(currentPage);
+        //mPager.addOnPageChangeListener(this);
         mPager.setAdapter(mPagerAdapter);
 
 

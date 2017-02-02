@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import bytes.wit.showcasing.R;
  */
 
 public class FullScreenVideoFragment extends Fragment {
-
+    private static final String TAG = "FullScreenVideoFragment";
     private static final String VIDEO_URL_PARAM = "video_url";
 
     private String mVideoUrl;
@@ -70,6 +71,13 @@ public class FullScreenVideoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initializeVideo();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        Log.d(TAG, "user visible" + isVisibleToUser);
     }
 
     private void initializeVideo() {
