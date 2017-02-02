@@ -1,12 +1,19 @@
 package bytes.wit.view.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.io.File;
 
 import bytes.wit.showcasing.R;
 import bytes.wit.view.customview.TouchImageView;
@@ -17,14 +24,16 @@ import bytes.wit.view.customview.TouchImageView;
  */
 
 
-public class FullScreenImageFragment extends Fragment implements TouchImageView.OnTouchImageViewListener {
+public class FullScreenImageFragment extends Fragment {
 
     public static final String TAG = "FullScreenImageFragment";
-    private TouchImageView mTouchImageView;
+    private TouchImageView mFullImagePreview;
 
     private static final String IMAGE_URL_PARAM = "image_url";
 
     private String mImageUrl;
+
+    private ProgressBar mPbPhotoPreview;
 
     public FullScreenImageFragment() {}
 
@@ -59,13 +68,49 @@ public class FullScreenImageFragment extends Fragment implements TouchImageView.
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mTouchImageView = (TouchImageView) view.findViewById(R.id.iv_full);
-        mTouchImageView.setOnTouchImageViewListener(this);
+        mFullImagePreview = (TouchImageView) view.findViewById(R.id.iv_full_image_preview);
+        mPbPhotoPreview = (ProgressBar) view.findViewById(R.id.pb_photo_preview);
+        loadImage(mImageUrl);
     }
 
-    @Override
-    public void onMove() {
-        Log.d(TAG, "width " + mTouchImageView.getZoomedRect().width());
+    private void loadImage(String path) {
+        if (path.contains("http")) {
+            Picasso.with(getActivity())
+                    .load(path)
+                    .into(mMyTarget);
+        } else {
+            File imageFile = new File(path);
+            Picasso.with(getActivity())
+                    .load(imageFile)
+                    .into(mMyTarget);
+        }
     }
+
+    /**
+     * Target class for Picasso. This specially used to show loader when loading an image.
+     * We show the loader when image is coming from server or not fully loaded.
+     * We hide the loader when image is available
+     * TODO When image loading is failed, we should give option to reload the image.
+     */
+    private Target mMyTarget = new Target() {
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            mPbPhotoPreview.setVisibility(View.GONE);
+            mFullImagePreview.setVisibility(View.VISIBLE);
+            mFullImagePreview.setImageBitmap(bitmap);
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+            mFullImagePreview.setVisibility(View.GONE);
+            mPbPhotoPreview.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+            mFullImagePreview.setVisibility(View.GONE);
+            mPbPhotoPreview.setVisibility(View.VISIBLE);
+        }
+    };
 
 }

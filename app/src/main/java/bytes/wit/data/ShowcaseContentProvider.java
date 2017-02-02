@@ -111,6 +111,7 @@ public class ShowcaseContentProvider extends ContentProvider {
                         null,
                         sortOrder);
                 break;
+
             // Default exception
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

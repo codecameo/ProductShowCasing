@@ -41,6 +41,17 @@ public class FullScreenImagePagerAdapter extends FragmentStatePagerAdapter {
     }
 
     /**
+     * This add a new fragment {@Link FullScreenImageFragment} to {@Link FullScreenImagePagerAdapter} to show the full screen image.
+     *
+     * @param urls All urls for adding our photo preview fragment.
+     */
+    public void addPreviewImages(List<String> urls) {
+        for (String url : urls) {
+            mFragments.add(FullScreenImageFragment.newInstance(url));
+        }
+    }
+
+    /**
      * Add video to the pager adapter.
      * @param videoUrl The video url.
      */

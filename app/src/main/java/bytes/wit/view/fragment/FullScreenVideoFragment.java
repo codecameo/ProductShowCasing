@@ -25,6 +25,7 @@ public class FullScreenVideoFragment extends Fragment {
     private String mVideoUrl;
 
     public VideoView videoContent;
+    private MediaController mMediaController;
 
     public FullScreenVideoFragment() {}
 
@@ -72,10 +73,16 @@ public class FullScreenVideoFragment extends Fragment {
     }
 
     private void initializeVideo() {
-        MediaController mediaController = new MediaController(getActivity());
-        mediaController.setAnchorView(videoContent);
+        mMediaController = new MediaController(getActivity());
+        mMediaController.setAnchorView(videoContent);
         videoContent.setVideoURI(Uri.parse(mVideoUrl));
-        videoContent.setMediaController(mediaController);
+        videoContent.setMediaController(mMediaController);
         videoContent.start();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mMediaController != null) mMediaController = null;
     }
 }

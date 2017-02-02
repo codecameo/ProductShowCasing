@@ -49,6 +49,10 @@
             android:name=".ProductDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity android:name="bytes.wit.view.activity.FullScreenContentActivity"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
+
         <service android:name="bytes.wit.services.ProductProviderService" />
         <service android:name="bytes.wit.services.StoreLocationProviderService" />
         <service android:name="bytes.wit.services.PopularProductProviderService" />

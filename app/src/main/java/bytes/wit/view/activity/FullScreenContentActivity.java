@@ -1,7 +1,6 @@
 package bytes.wit.view.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 
 import bytes.wit.showcasing.BaseActivity;
@@ -28,6 +27,7 @@ public class FullScreenContentActivity extends BaseActivity {
      */
     private FullScreenImagePagerAdapter mPagerAdapter;
     String VideoURL = "http://www.androidbegin.com/tutorial/AndroidCommercial.3gp";
+    public static final String IMAGE_URL = "http://hbz.h-cdn.co/assets/16/01/640x320/landscape-1451924994-hbz-melania-trump-embed-03.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +41,18 @@ public class FullScreenContentActivity extends BaseActivity {
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.vp_full_screen_content);
         mPagerAdapter = new FullScreenImagePagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addImage("");
+        mPagerAdapter.addImage(IMAGE_URL);
+        mPagerAdapter.addImage(IMAGE_URL);
+        mPagerAdapter.addImage(IMAGE_URL);
         mPagerAdapter.addVideo(VideoURL);
-        mPagerAdapter.addImage("");
+        mPagerAdapter.addImage(IMAGE_URL);
         mPagerAdapter.addVideo(VideoURL);
-        mPagerAdapter.addImage("");
+        mPagerAdapter.addImage(IMAGE_URL);
+        mPager.setCurrentItem(currentPage);
+        mPager.addOnPageChangeListener(this);
         mPager.setAdapter(mPagerAdapter);
+
+
 
     }
 }

@@ -1,5 +1,6 @@
 package bytes.wit.showcasing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import bytes.wit.adapters.PackageImageListAdapter;
+import bytes.wit.view.activity.FullScreenContentActivity;
 import cameo.code.imageslider.SliderFragment;
 
 /**
@@ -20,6 +22,8 @@ public class ProductDetailActivity extends BaseActivity implements PackageImageL
      * The image urls for slider images. This is set slider image and it may change in future.
      */
     private ArrayList<String> mSliderImages;
+
+    public static final String CURRENT_SLIDE_IMAGE_POSITION = "slide_image_position";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +64,9 @@ public class ProductDetailActivity extends BaseActivity implements PackageImageL
 
     @Override
     public void onPackageImageSelected(int position) {
+        Intent fullScreenImageIntent = new Intent(this, FullScreenContentActivity.class);
+        fullScreenImageIntent.putExtra(CURRENT_SLIDE_IMAGE_POSITION, position);
+        startActivity(fullScreenImageIntent);
         Toast.makeText(this, "Selected Position: " + position, Toast.LENGTH_SHORT).show();
     }
 }
