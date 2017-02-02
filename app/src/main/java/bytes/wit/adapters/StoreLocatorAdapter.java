@@ -1,11 +1,8 @@
 package bytes.wit.adapters;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
@@ -19,6 +16,7 @@ import java.util.List;
 import bytes.wit.fragments.FragmentStoreList.OnListFragmentInteractionListener;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.showcasing.R;
+import bytes.wit.utils.Constant;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link StoreLocatorModel} and makes a call to the
@@ -59,31 +57,33 @@ public class StoreLocatorAdapter extends RecyclerView.Adapter<StoreLocatorAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public final TextView mTvAddress;
-        public final TextView mTvPhone;
-        public final TextView mTvEmail;
+        public final TextView tvAddress;
+        public final TextView tvPhone;
+        public final TextView tvEmail;
         public final TextView tvDistance;
+        public final TextView tvDistrict;
 
         public ViewHolder(View view) {
             super(view);
-            mTvAddress = (TextView) view.findViewById(R.id.tv_address);
-            mTvPhone = (TextView) view.findViewById(R.id.tv_phone);
-            mTvEmail = (TextView) view.findViewById(R.id.tv_email);
+            tvAddress = (TextView) view.findViewById(R.id.tv_address);
+            tvPhone = (TextView) view.findViewById(R.id.tv_phone);
+            tvEmail = (TextView) view.findViewById(R.id.tv_email);
             tvDistance = (TextView) view.findViewById(R.id.tv_distance);
+            tvDistrict = (TextView) view.findViewById(R.id.tv_district);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mTvPhone.getText() + "'";
+            return super.toString() + " '" + tvPhone.getText() + "'";
         }
 
         public void bindTo(StoreLocatorModel storeLocatorModel) {
-            mTvAddress.setText(storeLocatorModel.getStore_address());
-            mTvEmail.setText("Email: sharif.iit.du@gmail.com");
-            mTvPhone.setText("Phone: "+storeLocatorModel.getMobile_number());
-
-            tvDistance.setText(getFormattedDistance());
+            tvAddress.setText(storeLocatorModel.getStore_address());
+            tvEmail.setText(Constant.EMAIL_TAG + storeLocatorModel.getEmail());
+            tvPhone.setText(Constant.PHONE_TAG + storeLocatorModel.getMobile_number());
+            tvDistrict.setText(storeLocatorModel.getDistrict());
+            tvDistance.setText(getFormattedDistance(storeLocatorModel.getDistance(), storeLocatorModel.getDistance_unit()));
         }
 
         @Override
@@ -94,14 +94,14 @@ public class StoreLocatorAdapter extends RecyclerView.Adapter<StoreLocatorAdapte
         }
     }
 
-    private SpannableString getFormattedDistance() {
-        String distance= "3.6\nkm";
+    private SpannableString getFormattedDistance(double dist, String distance_unit) {
+        String distance = dist + "\n" + distance_unit;
+        int index = distance.length() - distance_unit.length();
         SpannableString spannableString=  new SpannableString(distance);
-        spannableString.setSpan(new RelativeSizeSpan(1.3f), 0,3, 0);
-        spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0,3,0);
-        spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 0,3,0);
-        spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 3, distance.length(), 0);
+        spannableString.setSpan(new RelativeSizeSpan(1.3f), 0, index, 0);
+        spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, index, 0);
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 0, index, 0);
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), index, distance.length(), 0);
         return spannableString;
     }
-
 }

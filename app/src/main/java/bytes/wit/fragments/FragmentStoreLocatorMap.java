@@ -2,13 +2,20 @@ package bytes.wit.fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,12 +25,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+import bytes.wit.interfaces.OnLocationFetchedListener;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.showcasing.R;
+import bytes.wit.showcasing.StoreLocatorActivity;
+import bytes.wit.utils.Constant;
 import bytes.wit.utils.PermissionHandler;
 
 import static bytes.wit.utils.PermissionHandler.REQUEST_BOTH_LOCATION_PERMISSION;
@@ -35,7 +46,8 @@ import static bytes.wit.utils.PermissionHandler.REQUEST_FINE_LOCATION;
  * Email: sharif.iit.du@gmail.com
  */
 
-public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment implements OnMapReadyCallback {
+public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment implements OnMapReadyCallback,
+        OnLocationFetchedListener, GoogleMap.OnMarkerClickListener {
 
     private static final String KEY_STORE_LOCATION = "key_store_location";
     private static final String KEY_SELECTED_STORE_POSITION = "key_store_selection_position";
@@ -46,6 +58,7 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     private LatLng mStoreLocation;
     private CameraPosition mCameraPosition;
     private PermissionHandler mPermissionHandler;
+    private TextView mTvAddress, mTvEmail, mTvPhone, mTvDistrict, mTvDistance;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -66,15 +79,21 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initListeners();
         initVariable();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("Frag", "Resume 2");
     }
 
     private void initVariable() {
 
         mPermissionHandler = new PermissionHandler(getActivity());
 
-        Bundle bundle = new Bundle();
-        bundle = getArguments();
+        Bundle bundle = getArguments();
 
         if (bundle.containsKey(KEY_STORE_LOCATION)) {
             mStoreLocatorModels = (ArrayList<StoreLocatorModel>) getArguments().getSerializable(KEY_STORE_LOCATION);
@@ -84,11 +103,24 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
         }
     }
 
+    private void initListeners() {
+        ((StoreLocatorActivity) getActivity()).addLocationFetchedListener(this);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_store_locator_detail, container, false);
+        initView(rootView);
         return rootView;
+    }
+
+    private void initView(View rootView) {
+        mTvAddress = (TextView) rootView.findViewById(R.id.tv_map_address);
+        mTvDistrict = (TextView) rootView.findViewById(R.id.tv_map_district);
+        mTvPhone = (TextView) rootView.findViewById(R.id.tv_map_phone);
+        mTvEmail = (TextView) rootView.findViewById(R.id.tv_map_email);
+        mTvDistance = (TextView) rootView.findViewById(R.id.tv_map_distance);
     }
 
     @Override
@@ -113,9 +145,23 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         mUiSettings = mGoogleMap.getUiSettings();
+        mGoogleMap.setOnMarkerClickListener(this);
         mapUiSetting(true);
+        setupMarkers();
         locateStore();
+        updateBottomInfo();
 
+    }
+
+    private void setupMarkers() {
+        mGoogleMap.clear();
+        int size = mStoreLocatorModels.size();
+
+        for (int i = 0; i < size; i++) {
+            (mGoogleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(mStoreLocatorModels.get(i).getLatitude(), mStoreLocatorModels.get(i).getLongitude()))))
+                    .setTag(i);
+        }
     }
 
     private void locateStore() {
@@ -124,18 +170,22 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
                     .target(mStoreLocation)
                     .zoom(16)
                     .build();
-
             mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition));
+        }
+    }
 
-            mGoogleMap.clear();
-
-            int size = mStoreLocatorModels.size();
-
-            for (int i = 0; i < size; i++) {
-                mGoogleMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(mStoreLocatorModels.get(i).getLatitude(), mStoreLocatorModels.get(i).getLongitude()))
-                        .title(mStoreLocatorModels.get(i).getStore_address()));
-            }
+    /**
+     * Update info about the store in bottom of the map
+     */
+    private void updateBottomInfo() {
+        StoreLocatorModel storeLocatorModel = mStoreLocatorModels.get(mSelectedPosition);
+        mTvAddress.setText(storeLocatorModel.getStore_address());
+        mTvPhone.setText(Constant.PHONE_TAG + storeLocatorModel.getMobile_number());
+        mTvDistrict.setText(storeLocatorModel.getDistrict());
+        mTvEmail.setText(Constant.EMAIL_TAG + storeLocatorModel.getEmail());
+        if (storeLocatorModel.getDistance_unit() != null) {
+            mTvDistance.setVisibility(View.VISIBLE);
+            mTvDistance.setText(getFormattedDistance(storeLocatorModel.getDistance(), storeLocatorModel.getDistance_unit()));
         }
     }
 
@@ -184,7 +234,36 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
                 }
                 break;
         }
+    }
 
+    @Override
+    public void onLocationFetched(LatLng latLng) {
+        Log.d("Frag_Location", "Lat " + latLng.latitude + " Long " + latLng.longitude);
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((StoreLocatorActivity) getActivity()).removeLocationFetchedListener(this);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        mSelectedPosition = (int) marker.getTag();
+        mStoreLocation = new LatLng(mStoreLocatorModels.get(mSelectedPosition).getLatitude(), mStoreLocatorModels.get(mSelectedPosition).getLongitude());
+        locateStore();
+        updateBottomInfo();
+        return false;
+    }
+
+    private SpannableString getFormattedDistance(double dist, String distance_unit) {
+        String distance = dist + "\n" + distance_unit;
+        int index = distance.length() - distance_unit.length();
+        SpannableString spannableString = new SpannableString(distance);
+        spannableString.setSpan(new RelativeSizeSpan(1.3f), 0, index, 0);
+        spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, index, 0);
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 0, index, 0);
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), index, distance.length(), 0);
+        return spannableString;
     }
 }

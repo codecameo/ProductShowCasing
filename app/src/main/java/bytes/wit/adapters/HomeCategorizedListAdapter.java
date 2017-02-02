@@ -18,10 +18,12 @@ public class HomeCategorizedListAdapter extends RecyclerView.Adapter<CategoryVie
 
     private ArrayList<CategoryModel> mCategoryModels;
     private CategoryViewHolder.OnViewAllProductList mOnViewAllProductList;
+    private CategoryViewHolder.OnProductSelectedListener mOnProductSelectedListener;
 
-    public HomeCategorizedListAdapter(CategoryViewHolder.OnViewAllProductList onViewAllProductList) {
+    public HomeCategorizedListAdapter(CategoryViewHolder.OnViewAllProductList onViewAllProductList, CategoryViewHolder.OnProductSelectedListener onProductSelectedListener) {
         mCategoryModels = new ArrayList<>();
         mOnViewAllProductList = onViewAllProductList;
+        mOnProductSelectedListener = onProductSelectedListener;
     }
 
     @Override
@@ -39,6 +41,7 @@ public class HomeCategorizedListAdapter extends RecyclerView.Adapter<CategoryVie
 
         CategoryViewHolder categoryViewHolder = new CategoryViewHolder(LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false));
         categoryViewHolder.setOnViewAllProductList(mOnViewAllProductList);
+        categoryViewHolder.setOnProductSelectedListener(mOnProductSelectedListener);
         return categoryViewHolder;
         /*else
             return new SliderViewHolder(LayoutInflater.from(parent.getContext()).inflate(viewType,parent,false));*/

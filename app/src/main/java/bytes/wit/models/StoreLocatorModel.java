@@ -15,7 +15,10 @@ public class StoreLocatorModel implements Serializable {
     @SerializedName("mobile")
     private String mobile_number;
     private String district;
+    private String email;
     private double latitude, longitude;
+    private double distance;
+    private String distance_unit;
 
     public String getStore_address() {
         return store_address;
@@ -55,5 +58,29 @@ public class StoreLocatorModel implements Serializable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public String getDistance_unit() {
+        return distance_unit;
+    }
+
+    public void setDistance_unit(String distance_unit) {
+        this.distance_unit = distance_unit;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

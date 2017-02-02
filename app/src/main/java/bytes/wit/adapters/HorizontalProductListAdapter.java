@@ -18,7 +18,7 @@ import bytes.wit.viewholder.HorizontalProductListViewHolder;
 public class HorizontalProductListAdapter extends RecyclerView.Adapter<HorizontalProductListViewHolder> implements HorizontalProductListViewHolder.onProductSelectedListener {
 
 
-    private CategoryViewHolder.OnViewAllProductList mOnViewAllProductList;
+    private CategoryViewHolder.OnProductSelectedListener mOnProductSelectedListener;
     private ArrayList<ProductModel> mProductModels;
 
     public HorizontalProductListAdapter(ArrayList<ProductModel> productModels) {
@@ -48,13 +48,13 @@ public class HorizontalProductListAdapter extends RecyclerView.Adapter<Horizonta
         return 5;
     }
 
-    public void setOnViewAllProductList(CategoryViewHolder.OnViewAllProductList onViewAllProductList) {
-        this.mOnViewAllProductList = onViewAllProductList;
+    public void setOnProductSelectedListener(CategoryViewHolder.OnProductSelectedListener onProductSelectedListener) {
+        this.mOnProductSelectedListener = onProductSelectedListener;
     }
 
     @Override
     public void onProductSelected(int position) {
         //mOnViewAllProductList.onProductSelected(mProductModels.get(position));
-        mOnViewAllProductList.onProductSelected(new ProductModel());
+        mOnProductSelectedListener.onProductSelected(new ProductModel());
     }
 }

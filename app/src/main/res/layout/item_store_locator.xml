@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,20 +12,30 @@
 
     <TextView
         android:id="@+id/tv_address"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_toLeftOf="@+id/iv_near_me"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:text="Address"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:textSize="@dimen/abc_text_size_title_material" />
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:ellipsize="end" />
+
+    <TextView
+        android:id="@+id/tv_district"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_address"
+        android:textSize="@dimen/abc_text_size_caption_material"
+        android:text="Dhaka" />
 
     <TextView
         android:id="@+id/tv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_address"
+        android:layout_below="@id/tv_district"
         android:text="Phone +8801535704918"
         android:textSize="@dimen/abc_text_size_caption_material" />
-
 
     <TextView
         android:id="@+id/tv_email"
@@ -35,14 +46,14 @@
         tools:text="Email sharif.iit.du@gmail.com" />
 
     <ImageView
-        android:id="@+id/iv_near_me"
+        android:id="@id/iv_near_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:src="@drawable/ic_near_me" />
+        app:srcCompat="@drawable/ic_near_me" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_show_room"
         android:layout_below="@id/tv_email"
         android:layout_width="@dimen/tv_show_room_width"
@@ -60,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="12dp"
-        android:text="3.6\nkm"
+        android:gravity="center_horizontal"
         android:layout_below="@+id/iv_near_me"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

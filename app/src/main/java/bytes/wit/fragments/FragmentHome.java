@@ -36,7 +36,8 @@ import static bytes.wit.showcasing.ShowProductListActivity.KEY_PRODUCT_LIST;
  */
 
 public class FragmentHome extends Fragment implements ProductResultReceiver.Receiver,
-        CategoryViewHolder.OnViewAllProductList {
+        CategoryViewHolder.OnViewAllProductList,
+        CategoryViewHolder.OnProductSelectedListener {
 
     private ArrayList<String> mImagesUrl;
     private SliderFragment mSliderFragment;
@@ -96,7 +97,7 @@ public class FragmentHome extends Fragment implements ProductResultReceiver.Rece
     private void initVariables() {
         mImagesUrl = new ArrayList<>();
         mSliderFragment = SliderFragment.createWithPath(mImagesUrl);
-        mHomeCategorizedListAdapter = new HomeCategorizedListAdapter(this);
+        mHomeCategorizedListAdapter = new HomeCategorizedListAdapter(this, this);
         mProviderFactory = ProviderFactory.getProviderInstance();
         mHandler = new Handler();
         mProductResultReceiver = new ProductResultReceiver(mHandler);
