@@ -3,6 +3,7 @@ package bytes.wit.showcasing;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -61,5 +62,11 @@ public class ProductDetailActivity extends BaseActivity implements PackageImageL
     @Override
     public void onPackageImageSelected(int position) {
         Toast.makeText(this, "Selected Position: " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_product_detail, menu);
+        return true;
     }
 }
