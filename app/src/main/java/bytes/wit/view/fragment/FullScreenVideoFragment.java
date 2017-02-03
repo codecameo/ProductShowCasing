@@ -1,16 +1,21 @@
 package bytes.wit.view.fragment;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import bytes.wit.showcasing.R;
+
+import static com.google.android.gms.wearable.DataMap.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,14 +23,15 @@ import bytes.wit.showcasing.R;
  * create an instance of this fragment.
  */
 
-public class FullScreenVideoFragment extends Fragment {
+public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnPreparedListener {
 
     private static final String VIDEO_URL_PARAM = "video_url";
 
     private String mVideoUrl;
 
-    public VideoView videoContent;
+    public VideoView mVideoView;
     private MediaController mMediaController;
+    private ProgressBar mPbVideo;
 
     public FullScreenVideoFragment() {}
 
@@ -55,34 +61,63 @@ public class FullScreenVideoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_sull_screen_video, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_sull_screen_video, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        videoContent = (VideoView) view.findViewById(R.id.video_content);
+        initViews(view);
+    }
+
+    private void initViews(View view) {
+        mVideoView = (VideoView) view.findViewById(R.id.video_content);
+        mPbVideo = (ProgressBar) view.findViewById(R.id.pb_video);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initializeVideo();
-    }
 
-    private void initializeVideo() {
-        mMediaController = new MediaController(getActivity());
-        mMediaController.setAnchorView(videoContent);
-        videoContent.setVideoURI(Uri.parse(mVideoUrl));
-        videoContent.setMediaController(mMediaController);
-        videoContent.start();
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mMediaController != null) mMediaController = null;
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser){
+            startVideo();
+        }else{
+            stopVideo();
+        }
+    }
+
+    private void stopVideo() {
+        if (mVideoView != null){
+            mVideoView.stopPlayback();
+        }
+        if (mMediaController != null){
+            mMediaController = null;
+        }
+    }
+
+    private void startVideo() {
+        mMediaController = new MediaController(getActivity());
+        mMediaController.setAnchorView(mVideoView);
+        mPbVideo.setVisibility(View.VISIBLE);
+        mVideoView.setVideoURI(Uri.parse(mVideoUrl));
+        mVideoView.setMediaController(mMediaController);
+        mVideoView.start();
+        mVideoView.setOnPreparedListener(this);
+    }
+
+    private void initializeVideo() {
+
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        Log.d(TAG, "video prepared");
+        mPbVideo.setVisibility(View.GONE);
     }
 }

@@ -2,6 +2,7 @@ package bytes.wit.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
 import bytes.wit.showcasing.BaseActivity;
 import bytes.wit.showcasing.R;
@@ -48,11 +49,21 @@ public class FullScreenContentActivity extends BaseActivity {
         mPagerAdapter.addImage(IMAGE_URL);
         mPagerAdapter.addVideo(VideoURL);
         mPagerAdapter.addImage(IMAGE_URL);
-        mPager.setCurrentItem(currentPage);
-        mPager.addOnPageChangeListener(this);
+       // mPager.setCurrentItem(currentPage);
+       // mPager.addOnPageChangeListener(this);
         mPager.setAdapter(mPagerAdapter);
 
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home){
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
 
     }
 }
