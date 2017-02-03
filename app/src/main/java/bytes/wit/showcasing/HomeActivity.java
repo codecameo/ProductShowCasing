@@ -8,27 +8,21 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bytes.wit.animationhelpers.SearchBarAnimationHelper;
 import bytes.wit.fragments.FragmentBrandNew;
 import bytes.wit.fragments.FragmentHome;
 import bytes.wit.fragments.FragmentPopular;
-import bytes.wit.fragments.FragmentSearch;
-import bytes.wit.interfaces.SearchFragmentCommunicator;
 
-public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentSearch.Communicator {
+public class HomeActivity extends ProductSearchActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ViewPager mHomeViewPager;
     private List<String> mFragmentTitleList;
@@ -36,14 +30,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private HomeViewPagerAdapter mPagerAdapter;
     private TabLayout mTabLayout;
     private DrawerLayout mDrawer;
-    private MenuItem mSearchMenuItem;
-    private FrameLayout mSearchPanel;
-    private SearchBarAnimationHelper mSearchBarAnimationHelper;
-    private int mWidth, mHeight;
-    private float mRadius;
-    private View mParent;
-    private FragmentSearch mFragmentSearch;
-    private SearchFragmentCommunicator mSearchFragmentCommunicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +41,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         initSearchFragment();
         initListeners();
         initViewPager();
-
         initNavigationDrawer();
-    }
-
-    private void initListeners() {
-        mFragmentSearch.setCommunicator(this);
-    }
-
-    private void initSearchFragment() {
-        // Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // Replace the contents of the container with the new fragment
-        ft.add(R.id.fl_panel, mFragmentSearch, null).commit();
-
     }
 
     private void initNavigationDrawer() {
@@ -81,24 +54,22 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-    private void initVariables() {
+    @Override
+    protected void initVariables() {
+        super.initVariables();
         mFragmentList = new ArrayList<>();
         mFragmentTitleList = new ArrayList<>();
         mPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
-        mSearchBarAnimationHelper = new SearchBarAnimationHelper(mSearchPanel);
-        mParent = findViewById(R.id.parent_view);
-        mFragmentSearch = new FragmentSearch();
     }
 
     private void initViews() {
+        initSearchPanelView(R.id.fl_panel);
         mHomeViewPager = (ViewPager) findViewById(R.id.vp_home);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mSearchPanel = (FrameLayout) findViewById(R.id.fl_panel);
     }
 
     private void initViewPager() {
-
         mPagerAdapter.addFragment(new FragmentHome(), getString(R.string.tab_home));
         mPagerAdapter.addFragment(new FragmentPopular(), getString(R.string.tab_popular));
         mPagerAdapter.addFragment(new FragmentBrandNew(), getString(R.string.tab_brand_new));
@@ -123,12 +94,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    @Override
-    public void onSearchBackPressed() {
-        mSearchBarAnimationHelper.startAnimation(mWidth - 24, 24, mRadius, 0);
-    }
-
 
     private class HomeViewPagerAdapter extends FragmentPagerAdapter {
         public HomeViewPagerAdapter(FragmentManager supportFragmentManager) {
@@ -162,57 +127,15 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (mSearchBarAnimationHelper.isVisible()) {
-            toggleSearchBar();
         } else {
             super.onBackPressed();
         }
-    }
-
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        /*gNavAnimationXoffset = mSearchMenuItem.get / 2;
-        gNavAnimationYoffset = mSearchMenuItem.getHeight() / 2;
-        updateGnavPivot();*/
-
-        mWidth = mParent.getWidth();
-        mHeight = mParent.getHeight();
-        mRadius = (float) Math.sqrt((mWidth * mWidth) + (mHeight * mHeight));
     }
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
-
-        mSearchMenuItem = menu.findItem(R.id.action_search);
-
-
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_search) {
-            if (mSearchFragmentCommunicator != null) {
-                mSearchFragmentCommunicator.onSearchBarOpen();
-            }
-            toggleSearchBar();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void toggleSearchBar() {
-        mSearchBarAnimationHelper.startAnimation(mWidth - 24, 24, mRadius, 0);
-    }
-
-    public void setSearchFragmentCommunicator(SearchFragmentCommunicator mSearchFragmentCommunicator) {
-        this.mSearchFragmentCommunicator = mSearchFragmentCommunicator;
     }
 }

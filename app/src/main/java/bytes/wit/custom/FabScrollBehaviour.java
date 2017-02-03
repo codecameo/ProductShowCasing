@@ -28,16 +28,17 @@ public class FabScrollBehaviour extends FloatingActionButton.Behavior {
 
         Log.d("FabScrollBehaviour", "conX " + dxConsumed + " conY " + dyConsumed + " unconX " + dxUnconsumed + " unconY " + dyUnconsumed);
 
-        /*if (dyConsumed > 0)
+        if (dyConsumed > 0)
             child.animate().translationY(child.getHeight()*2).setInterpolator(new AccelerateInterpolator(2)).start();
         else
-            child.animate().translationY(-Measure.getNavigationBarSize(coordinatorLayout
-            .getContext()).y0).setInterpolator(new DecelerateInterpolator(2)).start();*/
-        if (dyConsumed <= 0 && !mShowingFloatButton) {
+            child.animate().translationY(/*-Measure.getNavigationBarSize(coordinatorLayout
+            .getContext()).y*/0).setInterpolator(new DecelerateInterpolator(2)).start();
+
+        /*if (dyConsumed <= 0 && !mShowingFloatButton) {
             mShowingFloatButton = true;
             child.animate().scaleX(1).setInterpolator(new DecelerateInterpolator(2)).start();
             child.animate().scaleY(1).setInterpolator(new DecelerateInterpolator(2)).start();
-        }
+        }*/
     }
 
     @Override
@@ -71,7 +72,7 @@ public class FabScrollBehaviour extends FloatingActionButton.Behavior {
         return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY);
     }*/
 
-    @Override
+    /*@Override
     public void onNestedScrollAccepted(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View directTargetChild, View target, int nestedScrollAxes) {
         super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
         Log.d("FabScrollBehaviour", "onNestedScrollAccepted");
@@ -80,5 +81,5 @@ public class FabScrollBehaviour extends FloatingActionButton.Behavior {
             child.animate().scaleX(0).setInterpolator(new AccelerateInterpolator(2)).start();
             child.animate().scaleY(0).setInterpolator(new AccelerateInterpolator(2)).start();
         }
-    }
+    }*/
 }

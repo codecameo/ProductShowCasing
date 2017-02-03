@@ -15,7 +15,7 @@ import android.widget.ImageView;
 
 import bytes.wit.adapters.ProductSearchAdapter;
 import bytes.wit.interfaces.SearchFragmentCommunicator;
-import bytes.wit.showcasing.HomeActivity;
+import bytes.wit.showcasing.ProductSearchActivity;
 import bytes.wit.showcasing.R;
 import bytes.wit.utils.Utils;
 
@@ -67,7 +67,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Se
         mIvSearchBack.setOnClickListener(this);
         mEtSearchField.addTextChangedListener(this);
         mIvClearField.setOnClickListener(this);
-        ((HomeActivity) getActivity()).setSearchFragmentCommunicator(this);
+        ((ProductSearchActivity) getActivity()).setSearchFragmentCommunicator(this);
     }
 
     private void initViews(View view) {
