@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +14,14 @@ import android.widget.VideoView;
 
 import bytes.wit.showcasing.R;
 
-import static com.google.android.gms.wearable.DataMap.TAG;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FullScreenVideoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 
-public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnPreparedListener {
-
+public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
+    private static final String TAG = "FullScreenVideoFragment";
     private static final String VIDEO_URL_PARAM = "video_url";
 
     private String mVideoUrl;
@@ -32,6 +29,7 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
     public VideoView mVideoView;
     private MediaController mMediaController;
     private ProgressBar mPbVideo;
+
 
     public FullScreenVideoFragment() {}
 
@@ -49,6 +47,7 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +81,22 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mMediaController != null){
+            reStartVideo();
+        }
+    }
+
+    //TODO right now in this method we are starting the video again
+    // TODO but in future we will keep track of the pause video and update it accordingly.
+    private void reStartVideo() {
+        startVideo();
+    }
+
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
@@ -91,6 +106,7 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
             stopVideo();
         }
     }
+
 
     private void stopVideo() {
         if (mVideoView != null){
@@ -102,22 +118,25 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
     }
 
     private void startVideo() {
+        if (getActivity() == null)return;
+
         mMediaController = new MediaController(getActivity());
         mMediaController.setAnchorView(mVideoView);
         mPbVideo.setVisibility(View.VISIBLE);
         mVideoView.setVideoURI(Uri.parse(mVideoUrl));
         mVideoView.setMediaController(mMediaController);
-        mVideoView.start();
         mVideoView.setOnPreparedListener(this);
-    }
-
-    private void initializeVideo() {
-
+        mVideoView.setOnCompletionListener(this);
+        mVideoView.start();
     }
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        Log.d(TAG, "video prepared");
         mPbVideo.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        mp.seekTo(0);
     }
 }
