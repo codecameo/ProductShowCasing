@@ -1,4 +1,4 @@
-package bytes.wit.view;
+package bytes.wit.view.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
