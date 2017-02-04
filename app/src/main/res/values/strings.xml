@@ -43,6 +43,7 @@
     <string name="text_related_product_title">Product related to this item</string>
     <string name="action_share">Share</string>
     <string name="action_favourite">Favourite</string>
+    <string name="text_product_image">Product Images</string>
 
     <string-array name="language">
         <item>English</item>

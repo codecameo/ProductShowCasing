@@ -9,4 +9,5 @@
     android:paddingLeft="@dimen/category_text_horizontal_padding"
     android:paddingRight="@dimen/category_text_horizontal_padding"
     android:paddingTop="@dimen/category_text_vertical_padding"
+    android:fontFamily="sans-serif-medium"
     android:textColor="@drawable/package_text_selection_color" />

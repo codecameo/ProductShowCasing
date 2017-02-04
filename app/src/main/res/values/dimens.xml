@@ -40,5 +40,6 @@
 
     <dimen name="specification_title_margin">4dp</dimen>
     <dimen name="slider_height">196dp</dimen>
+    <dimen name="slider_height_large">256dp</dimen>
 
 </resources>

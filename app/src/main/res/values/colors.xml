@@ -39,5 +39,6 @@
     <color name="light_overlay">#40000000</color>
 
     <color name="product_title">#3a3a3a</color>
+    <color name="off_white">#eaeaea</color>
 
 </resources>
