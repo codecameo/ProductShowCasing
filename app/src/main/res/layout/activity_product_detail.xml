@@ -25,6 +25,8 @@
             app:titleEnabled="false">
 
             <FrameLayout
+                android:background="@android:color/white"
+                android:foreground="@color/light_overlay"
                 android:id="@+id/slider_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/slider_height"

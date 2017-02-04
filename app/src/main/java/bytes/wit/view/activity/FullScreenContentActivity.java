@@ -32,8 +32,7 @@ public class FullScreenContentActivity extends BaseActivity {
      */
     private FullScreenImagePagerAdapter mPagerAdapter;
     String VideoURL = "http://www.androidbegin.com/tutorial/AndroidCommercial.3gp";
-    public static final String IMAGE_URL = "http://hbz.h-cdn.co/assets/16/01/640x320/landscape-1451924994-hbz-melania-trump-embed-03.jpg";
-
+    public static final String IMAGE_URL = "http://www.dancake.com.bd/images/home-slider/1479303628_th_1.jpg";
     private int mCurrentSlidePosition;
 
     @Override

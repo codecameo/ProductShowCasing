@@ -13,7 +13,6 @@ import android.view.animation.DecelerateInterpolator;
 /**
  * Created by Md. Sifat-Ul Haque on 2/2/2017.
  */
-
 public class FabScrollBehaviour extends FloatingActionButton.Behavior {
 
     private boolean mShowingFloatButton = true;
