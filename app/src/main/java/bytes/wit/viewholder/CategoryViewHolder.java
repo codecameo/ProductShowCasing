@@ -25,12 +25,12 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
     private OnViewAllProductList mOnViewAllProductList;
     private OnProductSelectedListener mOnProductSelectedListener;
 
-    public CategoryViewHolder(View itemView) {
+    public CategoryViewHolder(View itemView, HorizontalProductListAdapter horizontalProductListAdapter) {
         super(itemView);
 
         initViews(itemView);
         initListeners();
-        initVariables();
+        initVariables(horizontalProductListAdapter);
         setupProductList();
     }
 
@@ -45,9 +45,9 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
         new GravitySnapHelper(Gravity.START).attachToRecyclerView(mProductList);
     }
 
-    private void initVariables() {
+    private void initVariables(HorizontalProductListAdapter horizontalProductListAdapter) {
         //mProductListAdapter = new HorizontalProductListAdapter(mOnViewAllProductList,mCategoryModel.getProducts());
-        mProductListAdapter = new HorizontalProductListAdapter(null);
+        mProductListAdapter = horizontalProductListAdapter;
     }
 
     private void initViews(View view) {

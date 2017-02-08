@@ -27,7 +27,6 @@ import bytes.wit.interfaces.IStoreLocatorCommunicator;
 import bytes.wit.interfaces.OnLocationFetchedListener;
 import bytes.wit.models.StoreLocatorModel;
 import bytes.wit.receivers.StoreLocationReceiver;
-import bytes.wit.utils.PermissionHandler;
 import bytes.wit.wrappers.StoreLocationProviderAdapter;
 
 /**
@@ -50,7 +49,6 @@ public class StoreLocatorActivity extends BaseActivity implements
     private FragmentStoreLocatorMap mFragmentStoreLocator;
     private ProgressBar mProgressBar;
     private GoogleApiClient mGoogleApiClient;
-    private PermissionHandler mPermissionHandler;
     private LatLng mMyLastLocation;
     private boolean isPreviouslyLoaded = false;
     private ArrayList<OnLocationFetchedListener> mOnLocationFetchedListeners = new ArrayList<>();
@@ -97,7 +95,6 @@ public class StoreLocatorActivity extends BaseActivity implements
 
     private void initVariables() {
         mFragmentStoreList = new FragmentStoreList();
-        mPermissionHandler = new PermissionHandler(this);
         mStoreLocatorModels = new ArrayList<>();
         mProviderFactory = ProviderFactory.getProviderInstance();
         mHandler = new Handler();

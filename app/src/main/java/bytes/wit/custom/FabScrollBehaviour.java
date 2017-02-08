@@ -27,7 +27,7 @@ public class FabScrollBehaviour extends FloatingActionButton.Behavior {
 
         Log.d("FabScrollBehaviour", "conX " + dxConsumed + " conY " + dyConsumed + " unconX " + dxUnconsumed + " unconY " + dyUnconsumed);
 
-        if (dyConsumed > 0)
+        if (dyConsumed <= 0)
             child.animate().translationY(child.getHeight()*2).setInterpolator(new AccelerateInterpolator(2)).start();
         else
             child.animate().translationY(/*-Measure.getNavigationBarSize(coordinatorLayout
@@ -42,15 +42,16 @@ public class FabScrollBehaviour extends FloatingActionButton.Behavior {
 
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View directTargetChild, View target, int nestedScrollAxes) {
+        Log.d("FabScrollBehaviour", "onStartNestedScroll");
         return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL;
     }
 
-    /*@Override
+    @Override
     public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View target) {
         super.onStopNestedScroll(coordinatorLayout, child, target);
         Log.d("FabScrollBehaviour","onStopNestedScroll");
-        child.animate().scaleX(1).setInterpolator(new DecelerateInterpolator(2)).start();
-        child.animate().scaleY(1).setInterpolator(new DecelerateInterpolator(2)).start();
+        /*child.animate().scaleX(1).setInterpolator(new DecelerateInterpolator(2)).start();
+        child.animate().scaleY(1).setInterpolator(new DecelerateInterpolator(2)).start();*/
     }
 
     @Override
@@ -69,16 +70,16 @@ public class FabScrollBehaviour extends FloatingActionButton.Behavior {
     public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View target, float velocityX, float velocityY) {
         Log.d("FabScrollBehaviour","onNestedPreFling");
         return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY);
-    }*/
+    }
 
-    /*@Override
+    @Override
     public void onNestedScrollAccepted(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View directTargetChild, View target, int nestedScrollAxes) {
         super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
         Log.d("FabScrollBehaviour", "onNestedScrollAccepted");
-        if (mShowingFloatButton) {
+        /*if (mShowingFloatButton) {
             mShowingFloatButton = false;
             child.animate().scaleX(0).setInterpolator(new AccelerateInterpolator(2)).start();
             child.animate().scaleY(0).setInterpolator(new AccelerateInterpolator(2)).start();
-        }
-    }*/
+        }*/
+    }
 }

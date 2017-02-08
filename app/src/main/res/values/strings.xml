@@ -44,6 +44,7 @@
     <string name="action_share">Share</string>
     <string name="action_favourite">Favourite</string>
     <string name="text_product_image">Product Images</string>
+    <string name="text_select_product_packages">Select packages</string>
 
     <string-array name="language">
         <item>English</item>

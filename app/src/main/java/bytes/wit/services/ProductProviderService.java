@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import bytes.wit.apiconfig.ApiClient;
 import bytes.wit.apiconfig.IApiConfigProductProvider;
 import bytes.wit.models.CategoryModel;
-import bytes.wit.models.ProductModel;
+import bytes.wit.parsing_models.HomeCategoryListModel;
 import bytes.wit.utils.Constant;
 import bytes.wit.wrappers.ProductProviderAdapter;
 import retrofit2.Call;
@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static bytes.wit.utils.Constant.ACTION;
+import static bytes.wit.view.fragment.FullScreenImageFragment.TAG;
 
 /**
  * Created by Md. Sifat-Ul Haque on 12/30/2016.
@@ -46,7 +47,7 @@ public class ProductProviderService extends IntentService {
     private void fetchCategorizedProductList() {
 
         mCategoryModels = new ArrayList<>();
-        ArrayList<ProductModel> productModels = new ArrayList<>();
+        /*ArrayList<ProductModel> productModels = new ArrayList<>();
 
         CategoryModel categoryModel = new CategoryModel();
         categoryModel.setCategory_name("Cake");
@@ -60,28 +61,32 @@ public class ProductProviderService extends IntentService {
 
         categoryModel = new CategoryModel();
         categoryModel.setCategory_name("Car");
-        mCategoryModels.add(categoryModel);
+        mCategoryModels.add(categoryModel);*/
 
 
         IApiConfigProductProvider apiService = ApiClient.getClient().create(IApiConfigProductProvider.class);
 
-        /*Call<CategoryModel> call = apiService.getCategorizedProductList();
-        call.enqueue(new Callback<CategoryModel>() {
+        Call<HomeCategoryListModel> call = apiService.getCategorizedProductList();
+        call.enqueue(new Callback<HomeCategoryListModel>() {
             @Override
-            public void onResponse(Call<CategoryModel>call, Response<CategoryModel> response) {
-                List<ProductModel> movies = response.body().getProducts();
-                //Log.d(TAG, "Number of movies received: " + movies.size());
+            public void onResponse(Call<HomeCategoryListModel> call, Response<HomeCategoryListModel> response) {
+                mCategoryModels = response.body().getCategory();
+                Log.d(TAG, "Number of Product received: " + mCategoryModels.get(0).getProducts().size());
+                Log.d(TAG, "Number of Product received: " + mCategoryModels.get(0).getProducts().get(0).getPoster().getContent_url());
+                Log.d(TAG, "Number of Product received: " + mCategoryModels.get(1).getProducts().size());
+                sendProductData();
             }
 
             @Override
-            public void onFailure(Call<CategoryModel>call, Throwable t) {
+            public void onFailure(Call<HomeCategoryListModel> call, Throwable t) {
                 // Log error here since request failed
                 //Log.e(TAG, t.toString());
+                sendProductData();
             }
-        });*/
+        });
 
 
-        Call<CategoryModel> call = apiService.getCategorizedProductList("London,uk", "6050acd5591ada54a7944f58143faacc");
+        /*Call<CategoryModel> call = apiService.getCategorizedProductList("London,uk", "6050acd5591ada54a7944f58143faacc");
 
         call.enqueue(new Callback<CategoryModel>() {
             @Override
@@ -96,7 +101,7 @@ public class ProductProviderService extends IntentService {
                 //Log.e(TAG, t.toString());
                 sendProductData();
             }
-        });
+        });*/
     }
 
     private void sendProductData() {

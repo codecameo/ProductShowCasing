@@ -57,7 +57,6 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     private ArrayList<StoreLocatorModel> mStoreLocatorModels;
     private LatLng mStoreLocation;
     private CameraPosition mCameraPosition;
-    private PermissionHandler mPermissionHandler;
     private TextView mTvAddress, mTvEmail, mTvPhone, mTvDistrict, mTvDistance;
 
     /**
@@ -90,8 +89,6 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     }
 
     private void initVariable() {
-
-        mPermissionHandler = new PermissionHandler(getActivity());
 
         Bundle bundle = getArguments();
 
@@ -209,10 +206,10 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
     private void enableLocation(boolean flag) {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mGoogleMap.setMyLocationEnabled(flag);
-        } else if (!mPermissionHandler.hasFineLocationPermission()) {
-            mPermissionHandler.requestFineLocationPermission();
-        } else if (!mPermissionHandler.hasCoarseLocationPermission()) {
-            mPermissionHandler.requestCoarseLocationPermission();
+        } else if (!PermissionHandler.hasFineLocationPermission(getActivity())) {
+            PermissionHandler.requestPermissions(getActivity(), PermissionHandler.REQUEST_FINE_LOCATION, getString(R.string.permission_msg_location), Manifest.permission.ACCESS_FINE_LOCATION);
+        } else if (!PermissionHandler.hasCoarseLocationPermission(getActivity())) {
+            PermissionHandler.requestPermissions(getActivity(), PermissionHandler.REQUEST_FINE_LOCATION, getString(R.string.permission_msg_location), Manifest.permission.ACCESS_COARSE_LOCATION);
         }
     }
 
@@ -227,7 +224,7 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
             case REQUEST_FINE_LOCATION:
 
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getActivity(), "Location enbaled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Location enabled", Toast.LENGTH_SHORT).show();
                     enableLocation(true);
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.toast_location_permision_denied), Toast.LENGTH_LONG).show();

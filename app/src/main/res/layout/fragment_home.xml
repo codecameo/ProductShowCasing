@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
+    <LinearLayout
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/activity_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/slider_panel"
@@ -17,19 +17,17 @@
             android:layout_height="@dimen/slider_height" />
 
         <android.support.v7.widget.RecyclerView
-            android:nestedScrollingEnabled="false"
             android:id="@+id/rv_home_product_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <ProgressBar
             android:id="@+id/loader"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_gravity="center" />
-
-
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -17,7 +17,6 @@ import bytes.wit.viewholder.HorizontalProductListViewHolder;
 
 public class HorizontalProductListAdapter extends RecyclerView.Adapter<HorizontalProductListViewHolder> implements HorizontalProductListViewHolder.onProductSelectedListener {
 
-
     private CategoryViewHolder.OnProductSelectedListener mOnProductSelectedListener;
     private ArrayList<ProductModel> mProductModels;
 
@@ -32,7 +31,6 @@ public class HorizontalProductListAdapter extends RecyclerView.Adapter<Horizonta
 
     @Override
     public HorizontalProductListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         HorizontalProductListViewHolder holder = new HorizontalProductListViewHolder(LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false));
         holder.setOnProductSelectedListener(this);
         return holder;
@@ -40,12 +38,12 @@ public class HorizontalProductListAdapter extends RecyclerView.Adapter<Horizonta
 
     @Override
     public void onBindViewHolder(HorizontalProductListViewHolder holder, int position) {
-
+        holder.bindTo(mProductModels.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return mProductModels.size();
     }
 
     public void setOnProductSelectedListener(CategoryViewHolder.OnProductSelectedListener onProductSelectedListener) {

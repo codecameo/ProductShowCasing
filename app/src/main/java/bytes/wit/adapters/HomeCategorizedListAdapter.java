@@ -2,6 +2,7 @@ package bytes.wit.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class HomeCategorizedListAdapter extends RecyclerView.Adapter<CategoryVie
     @Override
     public int getItemViewType(int position) {
         //if (position>0)
-            return R.layout.item_home_list;
+        return position;
         /*else
             return R.layout.slider_layout;*/
     }
@@ -39,7 +40,8 @@ public class HomeCategorizedListAdapter extends RecyclerView.Adapter<CategoryVie
 
         //if (viewType == R.layout.item_home_list)
 
-        CategoryViewHolder categoryViewHolder = new CategoryViewHolder(LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false));
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_list, parent, false);
+        CategoryViewHolder categoryViewHolder = new CategoryViewHolder(view, new HorizontalProductListAdapter(mCategoryModels.get(viewType).getProducts()));
         categoryViewHolder.setOnViewAllProductList(mOnViewAllProductList);
         categoryViewHolder.setOnProductSelectedListener(mOnProductSelectedListener);
         return categoryViewHolder;
