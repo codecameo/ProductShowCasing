@@ -80,10 +80,11 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:drawableRight="@drawable/bengali_taka_sign"
+                    android:drawableRight="@drawable/ic_taka_bengali_letter"
                     android:fontFamily="sans-serif-medium"
                     android:text="500"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:drawablePadding="@dimen/list_item_margin"
+                    android:textColor="@color/product_title"
                     android:textSize="@dimen/abc_text_size_large_material" />
 
                 <TextView

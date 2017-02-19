@@ -28,7 +28,7 @@ public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 4;
     }
 
     public class PackageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -63,14 +63,12 @@ public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.
             }
 
             if (getAdapterPosition() == 0) {
-                ((TextView) itemView).setText("All Pack");
-            } else if (getAdapterPosition() == 1) {
                 ((TextView) itemView).setText("Family Pack");
-            } else if (getAdapterPosition() == 2) {
+            } else if (getAdapterPosition() == 1) {
                 ((TextView) itemView).setText("Regular Pack");
-            } else if (getAdapterPosition() == 3) {
+            } else if (getAdapterPosition() == 2) {
                 ((TextView) itemView).setText("Pocket Pack");
-            } else if (getAdapterPosition() == 4) {
+            } else if (getAdapterPosition() == 3) {
                 ((TextView) itemView).setText("Mini Pack");
             }
 

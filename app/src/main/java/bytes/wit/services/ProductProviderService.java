@@ -38,7 +38,6 @@ public class ProductProviderService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d("Service", "Fetching data");
         resultReceiver = new WeakReference<>((ResultReceiver) intent.getParcelableExtra(ProductProviderAdapter.PRODUCT_RESULT_RECEIVER));
         action = intent.getIntExtra(ACTION, 0);
         fetchCategorizedProductList();

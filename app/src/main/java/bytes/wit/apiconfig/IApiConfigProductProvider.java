@@ -20,7 +20,7 @@ public interface IApiConfigProductProvider {
     @GET("movie/{id}")
     Call<CategoryModel> getProductList(@Path("id") int categoryID, @Query("api_key") String apiKey);
 
-    @GET("http://aimsil.com/showcasing/category.txt")
+    @GET("category.txt")
     Call<HomeCategoryListModel> getCategorizedProductList();
 
     @GET("data/2.5/weather")

@@ -2,11 +2,15 @@ package bytes.wit.fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -23,6 +27,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -36,6 +42,7 @@ import bytes.wit.showcasing.R;
 import bytes.wit.showcasing.StoreLocatorActivity;
 import bytes.wit.utils.Constant;
 import bytes.wit.utils.PermissionHandler;
+import bytes.wit.utils.Utils;
 
 import static bytes.wit.utils.PermissionHandler.REQUEST_BOTH_LOCATION_PERMISSION;
 import static bytes.wit.utils.PermissionHandler.REQUEST_COARSE_LOCATION;
@@ -154,9 +161,12 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
         mGoogleMap.clear();
         int size = mStoreLocatorModels.size();
 
+        BitmapDescriptor bitmapDescriptor = getBitmapDescriptor(R.drawable.ic_store_locator);
+
         for (int i = 0; i < size; i++) {
             (mGoogleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(mStoreLocatorModels.get(i).getLatitude(), mStoreLocatorModels.get(i).getLongitude()))))
+                    .position(new LatLng(mStoreLocatorModels.get(i).getLatitude(), mStoreLocatorModels.get(i).getLongitude()))
+                    .icon(bitmapDescriptor)))
                     .setTag(i);
         }
     }
@@ -262,5 +272,16 @@ public class FragmentStoreLocatorMap extends android.support.v4.app.Fragment imp
         spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 0, index, 0);
         spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), index, distance.length(), 0);
         return spannableString;
+    }
+
+    private BitmapDescriptor getBitmapDescriptor(int id) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(getContext(), id);
+        int h = ((int) Utils.convertDpToPixel(36));
+        int w = ((int) Utils.convertDpToPixel(36));
+        vectorDrawable.setBounds(0, 0, w, h);
+        Bitmap bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bm);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bm);
     }
 }

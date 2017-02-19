@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:foreground="@color/light_overlay"
             android:scaleType="centerCrop"
-            android:src="@drawable/audi_4" />
+            android:src="@drawable/dummy_product" />
 
         <ImageView
             android:layout_width="64dp"
